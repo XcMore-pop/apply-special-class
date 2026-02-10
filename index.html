@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>สมัครเรียนห้องเรียนพิเศษ</title>
+  <style>
+    :root{--bg:#0b1220;--card:#121b2e;--line:#223252;--txt:#e6eefc;--muted:#a9b7d3;--brand:#22c55e;}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,"Sarabun",sans-serif;background:linear-gradient(180deg,#071022,#0b1220);color:var(--txt)}
+    .wrap{max-width:980px;margin:0 auto;padding:22px}
+    .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+    .badge{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.03);color:var(--muted);font-size:14px}
+    .hero{margin-top:18px;border:1px solid var(--line);border-radius:18px;background:radial-gradient(1200px 500px at 20% 0%,rgba(34,197,94,.25),transparent 55%),rgba(255,255,255,.03);padding:22px}
+    h1{margin:0 0 8px;font-size:28px} p{margin:0;color:var(--muted);line-height:1.6}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-top:14px}
+    .card{grid-column:span 12;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.03);padding:16px}
+    @media(min-width:860px){.card.half{grid-column:span 6}}
+    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    a.btn{display:inline-flex;align-items:center;gap:10px;padding:12px 14px;border-radius:12px;text-decoration:none;border:1px solid var(--line);color:var(--txt);background:rgba(255,255,255,.02)}
+    a.primary{border-color:rgba(34,197,94,.55);background:rgba(34,197,94,.14)}
+    ul{margin:10px 0 0;padding-left:18px;color:var(--muted);line-height:1.7}
+    .foot{margin-top:18px;color:var(--muted);font-size:13px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div class="badge">📌 ระบบสมัครเรียนออนไลน์</div>
+      <div class="badge">ปีการศึกษา 2569</div>
+    </div>
+
+    <div class="hero">
+      <h1>สมัครเรียน “ห้องเรียนพิเศษ”</h1>
+      <p>สมัครง่าย ส่งเอกสารออนไลน์ รับเลขใบสมัครทันที และเช็คสถานะได้</p>
+      <div class="btns">
+        <a class="btn primary" href="apply.html">✅ สมัครเลย</a>
+        <a class="btn" href="status.html">🔎 เช็คสถานะ</a>
+        <a class="btn" href="#" onclick="alert('ใส่ลิงก์ประกาศ/ไฟล์ PDF ตรงนี้ได้')">📄 ดาวน์โหลดประกาศ</a>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card half">
+        <h3 style="margin:0 0 8px">คุณสมบัติผู้สมัคร</h3>
+        <ul>
+          <li>กำลังศึกษาอยู่ระดับ ม.3 / ป.6 (ตามที่โรงเรียนกำหนด)</li>
+          <li>ผลการเรียนตามเกณฑ์</li>
+          <li>มีเอกสารครบถ้วน</li>
+        </ul>
+      </div>
+      <div class="card half">
+        <h3 style="margin:0 0 8px">เอกสารที่ต้องใช้</h3>
+        <ul>
+          <li>สำเนาบัตรประชาชน/สูติบัตร</li>
+          <li>ปพ.1 หรือใบรับรองผลการเรียน</li>
+          <li>รูปถ่ายนักเรียน</li>
+          <li>เอกสารอื่น ๆ (ถ้ามี)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3 style="margin:0 0 8px">ขั้นตอน</h3>
+        <ul>
+          <li>กรอกใบสมัครออนไลน์</li>
+          <li>อัปโหลดเอกสาร</li>
+          <li>รับเลขใบสมัคร (Application ID)</li>
+          <li>รอตรวจเอกสาร + ประกาศรายชื่อ</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot">* ตัวอย่างเว็บเดโม: ถ้าจะใช้งานจริงต้องต่อฐานข้อมูล/หลังบ้านสำหรับตรวจเอกสาร</div>
+  </div>
+</body>
+</html>
