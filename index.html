@@ -4,72 +4,155 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>สมัครเรียนห้องเรียนพิเศษ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#0b1220;--card:#121b2e;--line:#223252;--txt:#e6eefc;--muted:#a9b7d3;--brand:#22c55e;}
-    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,"Sarabun",sans-serif;background:linear-gradient(180deg,#071022,#0b1220);color:var(--txt)}
-    .wrap{max-width:980px;margin:0 auto;padding:22px}
-    .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-    .badge{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.03);color:var(--muted);font-size:14px}
-    .hero{margin-top:18px;border:1px solid var(--line);border-radius:18px;background:radial-gradient(1200px 500px at 20% 0%,rgba(34,197,94,.25),transparent 55%),rgba(255,255,255,.03);padding:22px}
-    h1{margin:0 0 8px;font-size:28px} p{margin:0;color:var(--muted);line-height:1.6}
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-top:14px}
-    .card{grid-column:span 12;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.03);padding:16px}
-    @media(min-width:860px){.card.half{grid-column:span 6}}
-    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-    a.btn{display:inline-flex;align-items:center;gap:10px;padding:12px 14px;border-radius:12px;text-decoration:none;border:1px solid var(--line);color:var(--txt);background:rgba(255,255,255,.02)}
-    a.primary{border-color:rgba(34,197,94,.55);background:rgba(34,197,94,.14)}
-    ul{margin:10px 0 0;padding-left:18px;color:var(--muted);line-height:1.7}
-    .foot{margin-top:18px;color:var(--muted);font-size:13px}
+    :root{
+      --bg:#f6fbf7; --card:#ffffff; --txt:#0f172a; --muted:#475569;
+      --line:#e2e8f0; --brand:#16a34a; --brand2:#22c55e;
+      --shadow:0 18px 40px rgba(2,6,23,.08);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"Sarabun",system-ui,-apple-system,sans-serif;background:
+      radial-gradient(900px 450px at 20% 0%, rgba(34,197,94,.18), transparent 55%),
+      radial-gradient(900px 450px at 90% 10%, rgba(22,163,74,.12), transparent 55%),
+      var(--bg);
+      color:var(--txt);
+    }
+    .wrap{max-width:1050px;margin:0 auto;padding:22px}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+    .brand{display:flex;align-items:center;gap:10px}
+    .logo{
+      width:38px;height:38px;border-radius:12px;
+      background:linear-gradient(135deg,var(--brand),var(--brand2));
+      box-shadow:0 12px 24px rgba(22,163,74,.25);
+    }
+    .brand b{font-size:18px}
+    .pill{padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.6);color:var(--muted);font-size:13px}
+    .hero{
+      margin-top:16px;
+      border:1px solid var(--line); border-radius:22px;
+      background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,255,255,.72));
+      box-shadow:var(--shadow);
+      padding:22px;
+      overflow:hidden;
+      position:relative;
+    }
+    .hero:after{
+      content:""; position:absolute; right:-120px; top:-140px;
+      width:360px;height:360px;border-radius:999px;
+      background:radial-gradient(circle at 30% 30%, rgba(34,197,94,.25), transparent 60%);
+    }
+    h1{margin:0 0 10px;font-size:30px;line-height:1.15}
+    .sub{margin:0;color:var(--muted);line-height:1.7;max-width:60ch}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    a.btn{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:12px 14px;border-radius:14px;
+      border:1px solid var(--line);
+      background:#fff;color:var(--txt);
+      text-decoration:none;box-shadow:0 10px 22px rgba(2,6,23,.06);
+    }
+    a.primary{
+      background:linear-gradient(135deg,var(--brand),var(--brand2));
+      color:#fff;border-color:transparent;
+      box-shadow:0 16px 30px rgba(22,163,74,.25);
+    }
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-top:14px}
+    .card{
+      grid-column:span 12;
+      border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.85);
+      box-shadow:0 10px 24px rgba(2,6,23,.06);
+      padding:16px;
+    }
+    @media(min-width:900px){.half{grid-column:span 6}}
+    .card h3{margin:0 0 8px}
+    ul{margin:10px 0 0;padding-left:18px;color:var(--muted);line-height:1.8}
+    .steps{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .step{
+      display:flex;gap:10px;align-items:flex-start;
+      padding:12px 12px;border:1px solid var(--line);border-radius:16px;background:#fff;
+      flex:1;min-width:240px;
+    }
+    .dot{
+      width:26px;height:26px;border-radius:10px;
+      background:rgba(22,163,74,.12);
+      color:var(--brand);display:grid;place-items:center;font-weight:700;
+      flex:0 0 auto;
+    }
+    .muted{color:var(--muted)}
+    .footer{margin-top:16px;color:var(--muted);font-size:13px}
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="top">
-      <div class="badge">📌 ระบบสมัครเรียนออนไลน์</div>
-      <div class="badge">ปีการศึกษา 2569</div>
+    <div class="nav">
+      <div class="brand">
+        <div class="logo"></div>
+        <div>
+          <b>ระบบสมัครเรียนห้องเรียนพิเศษ</b><br>
+          <span class="muted" style="font-size:13px">สมัครออนไลน์ • รับเลขใบสมัคร • เช็คสถานะ</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <span class="pill">ปีการศึกษา 2569</span>
+        <span class="pill">รองรับมือถือ/คอม</span>
+      </div>
     </div>
 
-    <div class="hero">
-      <h1>สมัครเรียน “ห้องเรียนพิเศษ”</h1>
-      <p>สมัครง่าย ส่งเอกสารออนไลน์ รับเลขใบสมัครทันที และเช็คสถานะได้</p>
-      <div class="btns">
+    <section class="hero">
+      <h1>สมัครเรียน “ห้องเรียนพิเศษ”<br>แบบเร็วและเป็นระบบ</h1>
+      <p class="sub">กรอกข้อมูล → อัปโหลดเอกสาร → ได้เลขใบสมัครทันที แล้วใช้เลขนั้นเช็คสถานะได้ตลอด</p>
+      <div class="actions">
         <a class="btn primary" href="apply.html">✅ สมัครเลย</a>
         <a class="btn" href="status.html">🔎 เช็คสถานะ</a>
         <a class="btn" href="#" onclick="alert('ใส่ลิงก์ประกาศ/ไฟล์ PDF ตรงนี้ได้')">📄 ดาวน์โหลดประกาศ</a>
       </div>
-    </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="dot">1</div>
+          <div><b>กรอกข้อมูล</b><div class="muted" style="font-size:13px">ข้อมูลนักเรียน/ผู้ปกครอง</div></div>
+        </div>
+        <div class="step">
+          <div class="dot">2</div>
+          <div><b>อัปโหลดเอกสาร</b><div class="muted" style="font-size:13px">PDF/JPG/PNG ได้</div></div>
+        </div>
+        <div class="step">
+          <div class="dot">3</div>
+          <div><b>รับเลขใบสมัคร</b><div class="muted" style="font-size:13px">ใช้เช็คสถานะ</div></div>
+        </div>
+      </div>
+    </section>
 
     <div class="grid">
       <div class="card half">
-        <h3 style="margin:0 0 8px">คุณสมบัติผู้สมัคร</h3>
+        <h3>คุณสมบัติผู้สมัคร</h3>
         <ul>
-          <li>กำลังศึกษาอยู่ระดับ ม.3 / ป.6 (ตามที่โรงเรียนกำหนด)</li>
-          <li>ผลการเรียนตามเกณฑ์</li>
-          <li>มีเอกสารครบถ้วน</li>
+          <li>ระดับชั้นตามประกาศของโรงเรียน</li>
+          <li>ผลการเรียนผ่านเกณฑ์</li>
+          <li>เอกสารครบถ้วนและชัดเจน</li>
         </ul>
       </div>
+
       <div class="card half">
-        <h3 style="margin:0 0 8px">เอกสารที่ต้องใช้</h3>
+        <h3>เอกสารที่ใช้</h3>
         <ul>
-          <li>สำเนาบัตรประชาชน/สูติบัตร</li>
+          <li>บัตรประชาชน/สูติบัตร</li>
           <li>ปพ.1 หรือใบรับรองผลการเรียน</li>
           <li>รูปถ่ายนักเรียน</li>
-          <li>เอกสารอื่น ๆ (ถ้ามี)</li>
+          <li>อื่น ๆ (ถ้ามี)</li>
         </ul>
       </div>
 
       <div class="card">
-        <h3 style="margin:0 0 8px">ขั้นตอน</h3>
-        <ul>
-          <li>กรอกใบสมัครออนไลน์</li>
-          <li>อัปโหลดเอกสาร</li>
-          <li>รับเลขใบสมัคร (Application ID)</li>
-          <li>รอตรวจเอกสาร + ประกาศรายชื่อ</li>
-        </ul>
+        <h3>หมายเหตุ</h3>
+        <div class="muted">ถ้าจะใช้งานจริงกับโรงเรียน แนะนำต่อฐานข้อมูล + หลังบ้านตรวจเอกสาร + ระบบเปลี่ยนสถานะ</div>
       </div>
     </div>
 
-    <div class="foot">* ตัวอย่างเว็บเดโม: ถ้าจะใช้งานจริงต้องต่อฐานข้อมูล/หลังบ้านสำหรับตรวจเอกสาร</div>
+    <div class="footer">เวอร์ชันนี้เป็นหน้าเว็บสวย + เดโมระบบใบสมัคร (เก็บในเครื่องด้วย localStorage)</div>
   </div>
 </body>
 </html>
