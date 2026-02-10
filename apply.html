@@ -244,13 +244,10 @@
               <label>สัญชาติ</label>
               <input name="nationality" placeholder="เช่น ไทย" />
             </div>
-
-            <div class="col4">
-              <label>วันเกิด</label>
+             <div class="col4">
               <select name="birthDay">
                 <option value="">วัน</option>
-                ${Array.from({length:31},(_,i)=>`<option>${i+1}</option>`).join('')}
-              </select>
+              <input name="birthDay" inputmode="numeric" placeholder="7" />
             </div>
             <div class="col4">
               <label>เดือนเกิด</label>
