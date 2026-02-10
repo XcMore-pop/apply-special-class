@@ -177,16 +177,16 @@
   <div class="wrap">
     <div class="header">
       <h1>โรงเรียน / โครงการห้องเรียนพิเศษ</h1>
-      <div class="sub">กรอกข้อมูลให้ตรงตามเอกสารจริง (ระบบเดโมนี้จะสร้างเลขใบสมัครและเก็บใบสมัครล่าสุดไว้ในเครื่อง)</div>
+      <div class="sub">กรอกข้อมูลให้ตรงตามเอกสารจริง (บังคับกรอกทุกช่อง ยกเว้น “ความสามารถพิเศษ”)</div>
       <div class="pillrow">
         <div class="pill">รองรับมือถือ/คอม</div>
         <div class="pill">แนบไฟล์ PDF/JPG/PNG</div>
-        <div class="pill">มีหมวดข้อมูลเหมือนแบบฟอร์มจริง</div>
+        <div class="pill">ทุกช่องต้องกรอก</div>
       </div>
       <div id="toast" class="toast"></div>
     </div>
 
-    <form id="f" class="layout">
+    <form id="f" class="layout" novalidate>
       <aside class="side">
         <h3>เมนูแบบฟอร์ม</h3>
         <div class="toc">
@@ -197,7 +197,7 @@
           <a href="#sec-program"><span>หลักสูตรที่ต้องการสมัคร</span><small>5</small></a>
           <a href="#sec-files"><span>แนบไฟล์หลักฐาน</span><small>6</small></a>
         </div>
-        <div class="mini" style="margin-top:10px">* ช่องที่มี <span class="req">*</span> แนะนำให้บังคับกรอกจริงเมื่อทำระบบจริง</div>
+        <div class="mini" style="margin-top:10px">* ช่องที่มี <span class="req">*</span> คือบังคับกรอก</div>
       </aside>
 
       <main class="main">
@@ -237,20 +237,21 @@
               <input name="citizenId" required inputmode="numeric" placeholder="x-xxxx-xxxxx-xx-x" />
             </div>
             <div class="col3">
-              <label>เชื้อชาติ</label>
-              <input name="race" placeholder="เช่น ไทย" />
+              <label>เชื้อชาติ <span class="req">*</span></label>
+              <input name="race" required placeholder="เช่น ไทย" />
             </div>
             <div class="col3">
-              <label>สัญชาติ</label>
-              <input name="nationality" placeholder="เช่น ไทย" />
+              <label>สัญชาติ <span class="req">*</span></label>
+              <input name="nationality" required placeholder="เช่น ไทย" />
             </div>
-             <div class="col4">
-              <label>วันเกิด</label>
-              <input name="birthDay" inputmode="numeric" placeholder="7" />
+
+            <div class="col4">
+              <label>วันเกิด <span class="req">*</span></label>
+              <input name="birthDay" required inputmode="numeric" placeholder="เช่น 7" />
             </div>
             <div class="col4">
-              <label>เดือนเกิด</label>
-              <select name="birthMonth">
+              <label>เดือนเกิด <span class="req">*</span></label>
+              <select name="birthMonth" required>
                 <option value="">เดือน</option>
                 <option>มกราคม</option><option>กุมภาพันธ์</option><option>มีนาคม</option><option>เมษายน</option>
                 <option>พฤษภาคม</option><option>มิถุนายน</option><option>กรกฎาคม</option><option>สิงหาคม</option>
@@ -258,16 +259,16 @@
               </select>
             </div>
             <div class="col4">
-              <label>ปีเกิด (พ.ศ.)</label>
-              <input name="birthYear" inputmode="numeric" placeholder="เช่น 2552" />
+              <label>ปีเกิด (พ.ศ.) <span class="req">*</span></label>
+              <input name="birthYear" required inputmode="numeric" placeholder="เช่น 2552" />
             </div>
 
             <div class="col4">
-              <label>ศาสนา</label>
-              <input name="religion" placeholder="เช่น พุทธ" />
+              <label>ศาสนา <span class="req">*</span></label>
+              <input name="religion" required placeholder="เช่น พุทธ" />
             </div>
             <div class="col8">
-              <label>ความสามารถพิเศษ</label>
+              <label>ความสามารถพิเศษ (ไม่บังคับ)</label>
               <input name="talent" placeholder="เช่น กีฬา/ดนตรี/หุ่นยนต์ ฯลฯ" />
             </div>
           </div>
@@ -287,39 +288,39 @@
 
           <div class="grid">
             <div class="col4">
-              <label>บ้านเลขที่</label>
-              <input name="addrNo" placeholder="เช่น 99/1" />
+              <label>บ้านเลขที่ <span class="req">*</span></label>
+              <input name="addrNo" required placeholder="เช่น 99/1" />
             </div>
             <div class="col4">
-              <label>หมู่ที่</label>
-              <input name="addrMoo" placeholder="เช่น 12" />
+              <label>หมู่ที่ <span class="req">*</span></label>
+              <input name="addrMoo" required placeholder="เช่น 12" />
             </div>
             <div class="col4">
-              <label>หมู่บ้าน</label>
-              <input name="addrVillage" placeholder="ชื่อหมู่บ้าน" />
+              <label>หมู่บ้าน <span class="req">*</span></label>
+              <input name="addrVillage" required placeholder="ชื่อหมู่บ้าน" />
             </div>
 
             <div class="col6">
-              <label>แขวง/ตำบล</label>
-              <input name="addrSubdistrict" placeholder="ตำบล" />
+              <label>แขวง/ตำบล <span class="req">*</span></label>
+              <input name="addrSubdistrict" required placeholder="ตำบล" />
             </div>
             <div class="col6">
-              <label>เขต/อำเภอ</label>
-              <input name="addrDistrict" placeholder="อำเภอ" />
-            </div>
-
-            <div class="col6">
-              <label>จังหวัด</label>
-              <input name="addrProvince" placeholder="จังหวัด" />
-            </div>
-            <div class="col6">
-              <label>รหัสไปรษณีย์</label>
-              <input name="addrZip" inputmode="numeric" placeholder="xxxxx" />
+              <label>เขต/อำเภอ <span class="req">*</span></label>
+              <input name="addrDistrict" required placeholder="อำเภอ" />
             </div>
 
             <div class="col6">
-              <label>โทรศัพท์บ้าน</label>
-              <input name="homePhone" inputmode="tel" placeholder="ถ้ามี" />
+              <label>จังหวัด <span class="req">*</span></label>
+              <input name="addrProvince" required placeholder="จังหวัด" />
+            </div>
+            <div class="col6">
+              <label>รหัสไปรษณีย์ <span class="req">*</span></label>
+              <input name="addrZip" required inputmode="numeric" placeholder="xxxxx" />
+            </div>
+
+            <div class="col6">
+              <label>โทรศัพท์บ้าน <span class="req">*</span></label>
+              <input name="homePhone" required inputmode="tel" placeholder="ตัวอย่าง 045xxxxxx" />
             </div>
             <div class="col6">
               <label>โทรศัพท์มือถือ <span class="req">*</span></label>
@@ -333,20 +334,20 @@
                   ที่อยู่ปัจจุบันใช้ที่อยู่ตามทะเบียนบ้าน
                 </label>
               </div>
-              <div class="hint" style="margin-top:6px">ถ้าติ๊ก ระบบจะคัดลอกข้อมูลที่อยู่ไปช่อง “ที่อยู่ปัจจุบัน” (ตัวอย่างเดโม)</div>
+              <div class="hint" style="margin-top:6px">ถ้าติ๊ก ระบบจะคัดลอกข้อมูลไป “ที่อยู่ปัจจุบัน” อัตโนมัติ</div>
             </div>
           </div>
 
           <div style="margin-top:12px;border-top:1px solid var(--line);padding-top:12px">
             <b>ที่อยู่ปัจจุบัน</b>
             <div class="grid" style="margin-top:6px">
-              <div class="col4"><label>บ้านเลขที่</label><input name="curNo" /></div>
-              <div class="col4"><label>หมู่ที่</label><input name="curMoo" /></div>
-              <div class="col4"><label>หมู่บ้าน</label><input name="curVillage" /></div>
-              <div class="col6"><label>แขวง/ตำบล</label><input name="curSubdistrict" /></div>
-              <div class="col6"><label>เขต/อำเภอ</label><input name="curDistrict" /></div>
-              <div class="col6"><label>จังหวัด</label><input name="curProvince" /></div>
-              <div class="col6"><label>รหัสไปรษณีย์</label><input name="curZip" inputmode="numeric" /></div>
+              <div class="col4"><label>บ้านเลขที่ <span class="req">*</span></label><input name="curNo" required /></div>
+              <div class="col4"><label>หมู่ที่ <span class="req">*</span></label><input name="curMoo" required /></div>
+              <div class="col4"><label>หมู่บ้าน <span class="req">*</span></label><input name="curVillage" required /></div>
+              <div class="col6"><label>แขวง/ตำบล <span class="req">*</span></label><input name="curSubdistrict" required /></div>
+              <div class="col6"><label>เขต/อำเภอ <span class="req">*</span></label><input name="curDistrict" required /></div>
+              <div class="col6"><label>จังหวัด <span class="req">*</span></label><input name="curProvince" required /></div>
+              <div class="col6"><label>รหัสไปรษณีย์ <span class="req">*</span></label><input name="curZip" required inputmode="numeric" /></div>
             </div>
           </div>
         </section>
@@ -365,56 +366,56 @@
 
           <div class="grid">
             <div class="col6">
-              <label>ชื่อ-สกุล บิดา</label>
-              <input name="fatherName" placeholder="ชื่อ-สกุล" />
+              <label>ชื่อ-สกุล บิดา <span class="req">*</span></label>
+              <input name="fatherName" required placeholder="ชื่อ-สกุล" />
             </div>
             <div class="col6">
-              <label>เลขบัตรประชาชนบิดา</label>
-              <input name="fatherCid" inputmode="numeric" placeholder="x-xxxx-xxxxx-xx-x" />
+              <label>เลขบัตรประชาชนบิดา <span class="req">*</span></label>
+              <input name="fatherCid" required inputmode="numeric" placeholder="x-xxxx-xxxxx-xx-x" />
             </div>
             <div class="col4">
-              <label>อาชีพบิดา</label>
-              <input name="fatherJob" />
+              <label>อาชีพบิดา <span class="req">*</span></label>
+              <input name="fatherJob" required />
             </div>
             <div class="col4">
-              <label>รายได้ต่อเดือน (บิดา)</label>
-              <input name="fatherIncome" inputmode="numeric" placeholder="ตัวเลข" />
+              <label>รายได้ต่อเดือน (บิดา) <span class="req">*</span></label>
+              <input name="fatherIncome" required inputmode="numeric" placeholder="ตัวเลข" />
             </div>
             <div class="col4">
-              <label>สถานภาพของบิดา</label>
+              <label>สถานภาพของบิดา <span class="req">*</span></label>
               <div class="radio">
-                <label><input type="radio" name="fatherAlive" value="มีชีวิต" checked> มีชีวิต</label>
-                <label><input type="radio" name="fatherAlive" value="ไม่มีชีวิต"> ไม่มีชีวิต</label>
+                <label><input type="radio" name="fatherAlive" value="มีชีวิต" checked required> มีชีวิต</label>
+                <label><input type="radio" name="fatherAlive" value="ไม่มีชีวิต" required> ไม่มีชีวิต</label>
               </div>
             </div>
 
             <div class="col6" style="margin-top:4px">
-              <label>ชื่อ-สกุล มารดา</label>
-              <input name="motherName" placeholder="ชื่อ-สกุล" />
+              <label>ชื่อ-สกุล มารดา <span class="req">*</span></label>
+              <input name="motherName" required placeholder="ชื่อ-สกุล" />
             </div>
             <div class="col6">
-              <label>เลขบัตรประชาชนมารดา</label>
-              <input name="motherCid" inputmode="numeric" placeholder="x-xxxx-xxxxx-xx-x" />
+              <label>เลขบัตรประชาชนมารดา <span class="req">*</span></label>
+              <input name="motherCid" required inputmode="numeric" placeholder="x-xxxx-xxxxx-xx-x" />
             </div>
             <div class="col4">
-              <label>อาชีพมารดา</label>
-              <input name="motherJob" />
+              <label>อาชีพมารดา <span class="req">*</span></label>
+              <input name="motherJob" required />
             </div>
             <div class="col4">
-              <label>รายได้ต่อเดือน (มารดา)</label>
-              <input name="motherIncome" inputmode="numeric" placeholder="ตัวเลข" />
+              <label>รายได้ต่อเดือน (มารดา) <span class="req">*</span></label>
+              <input name="motherIncome" required inputmode="numeric" placeholder="ตัวเลข" />
             </div>
             <div class="col4">
-              <label>สถานภาพของมารดา</label>
+              <label>สถานภาพของมารดา <span class="req">*</span></label>
               <div class="radio">
-                <label><input type="radio" name="motherAlive" value="มีชีวิต" checked> มีชีวิต</label>
-                <label><input type="radio" name="motherAlive" value="ไม่มีชีวิต"> ไม่มีชีวิต</label>
+                <label><input type="radio" name="motherAlive" value="มีชีวิต" checked required> มีชีวิต</label>
+                <label><input type="radio" name="motherAlive" value="ไม่มีชีวิต" required> ไม่มีชีวิต</label>
               </div>
             </div>
 
             <div class="col6">
-              <label>สถานภาพบิดามารดา</label>
-              <select name="parentStatus">
+              <label>สถานภาพบิดามารดา <span class="req">*</span></label>
+              <select name="parentStatus" required>
                 <option value="">-- เลือกสถานภาพ --</option>
                 <option>อยู่ด้วยกัน</option>
                 <option>แยกกันอยู่</option>
@@ -427,14 +428,14 @@
               <label>ผู้ปกครอง คือ <span class="req">*</span></label>
               <div class="radio">
                 <label><input type="radio" name="guardian" value="บิดา" required> บิดา</label>
-                <label><input type="radio" name="guardian" value="มารดา"> มารดา</label>
-                <label><input type="radio" name="guardian" value="บุคคลอื่นๆ"> บุคคลอื่น ๆ</label>
+                <label><input type="radio" name="guardian" value="มารดา" required> มารดา</label>
+                <label><input type="radio" name="guardian" value="บุคคลอื่นๆ" required> บุคคลอื่น ๆ</label>
               </div>
             </div>
 
             <div class="col12">
               <label>เบอร์โทรผู้ปกครองที่สามารถติดต่อได้ <span class="req">*</span></label>
-              <input name="guardianPhone" required inputmode="tel" placeholder="0xxxxxxxxx (ใส่หลายเบอร์คั่นด้วย , ได้)" />
+              <input name="guardianPhone" required inputmode="tel" placeholder="0xxxxxxxxx (หลายเบอร์คั่นด้วย , ได้)" />
             </div>
           </div>
         </section>
@@ -453,28 +454,28 @@
 
           <div class="grid">
             <div class="col4">
-              <label>เกรดเฉลี่ยรวม (GPA)</label>
-              <input name="gpa" inputmode="decimal" placeholder="เช่น 3.25" />
+              <label>เกรดเฉลี่ยรวม (GPA) <span class="req">*</span></label>
+              <input name="gpa" required inputmode="decimal" placeholder="เช่น 3.25" />
             </div>
             <div class="col4">
-              <label>เกรดวิทย์</label>
-              <input name="gpaSci" inputmode="decimal" placeholder="เช่น 3.50" />
+              <label>เกรดวิทย์ <span class="req">*</span></label>
+              <input name="gpaSci" required inputmode="decimal" placeholder="เช่น 3.50" />
             </div>
             <div class="col4">
-              <label>เกรดคณิต</label>
-              <input name="gpaMath" inputmode="decimal" placeholder="เช่น 3.75" />
+              <label>เกรดคณิต <span class="req">*</span></label>
+              <input name="gpaMath" required inputmode="decimal" placeholder="เช่น 3.75" />
             </div>
 
             <div class="col6">
-              <label>สำเร็จการศึกษาหรือกำลังศึกษาอยู่ชั้น ม.3</label>
+              <label>สำเร็จการศึกษาหรือกำลังศึกษาอยู่ชั้น ม.3 <span class="req">*</span></label>
               <div class="radio">
-                <label><input type="radio" name="fromSchool" value="จากโรงเรียนเดิม" checked> จากโรงเรียนเดิม</label>
-                <label><input type="radio" name="fromSchool" value="จากโรงเรียนอื่น"> จากโรงเรียนอื่น</label>
+                <label><input type="radio" name="fromSchool" value="จากโรงเรียนเดิม" checked required> จากโรงเรียนเดิม</label>
+                <label><input type="radio" name="fromSchool" value="จากโรงเรียนอื่น" required> จากโรงเรียนอื่น</label>
               </div>
             </div>
             <div class="col6">
-              <label>โรงเรียนเดิม</label>
-              <input name="prevSchool" placeholder="ชื่อโรงเรียนเดิม" />
+              <label>โรงเรียนเดิม <span class="req">*</span></label>
+              <input name="prevSchool" required placeholder="ชื่อโรงเรียนเดิม" />
             </div>
           </div>
         </section>
@@ -495,8 +496,8 @@
             <div class="col12">
               <div class="radio">
                 <label><input type="radio" name="program" value="SMTE" required> SMTE : วิทยาศาสตร์-คณิตศาสตร์ เทคโนโลยีและสิ่งแวดล้อม</label>
-                <label><input type="radio" name="program" value="SMC-AI"> SMC-AI : วิทยาศาสตร์-คณิตศาสตร์ คอมพิวเตอร์และปัญญาประดิษฐ์</label>
-                <label><input type="radio" name="program" value="SME"> SME : วิทยาศาสตร์-คณิตศาสตร์ ภาษาอังกฤษ</label>
+                <label><input type="radio" name="program" value="SMC-AI" required> SMC-AI : วิทยาศาสตร์-คณิตศาสตร์ คอมพิวเตอร์และปัญญาประดิษฐ์</label>
+                <label><input type="radio" name="program" value="SME" required> SME : วิทยาศาสตร์-คณิตศาสตร์ ภาษาอังกฤษ</label>
               </div>
             </div>
           </div>
@@ -549,8 +550,8 @@
             </div>
 
             <div class="col12">
-              <label>หมายเหตุเพิ่มเติม</label>
-              <textarea name="note" placeholder="ถ้ามี"></textarea>
+              <label>หมายเหตุเพิ่มเติม <span class="req">*</span></label>
+              <textarea name="note" required placeholder="กรอกหมายเหตุ (ถ้าไม่มีให้ใส่ “-”)"></textarea>
             </div>
           </div>
 
@@ -558,7 +559,7 @@
             <a class="btn" href="status.html">🔎 ไปเช็คสถานะ</a>
             <button class="primary" type="submit">💾 บันทึกข้อมูล</button>
           </div>
-          <div class="mini" style="margin-top:8px">เดโมนี้ไม่อัปโหลดไฟล์จริง (เบราว์เซอร์ไม่ให้เก็บไฟล์ลง localStorage) จะเก็บแค่ “ชื่อไฟล์” และข้อมูลฟอร์ม</div>
+          <div class="mini" style="margin-top:8px">เดโมนี้ไม่อัปโหลดไฟล์จริง จะเก็บแค่ “ชื่อไฟล์” และข้อมูลฟอร์ม</div>
         </section>
       </main>
     </form>
@@ -595,44 +596,71 @@
     bindFileName('fileSlip','nameSlip');
     bindFileName('filePhoto','namePhoto');
 
-    // คัดลอกที่อยู่ทะเบียนบ้าน -> ที่อยู่ปัจจุบัน
-    document.getElementById('sameAddr').addEventListener('change', (e)=>{
-      const on = e.target.checked;
-      const map = [
-        ['addrNo','curNo'], ['addrMoo','curMoo'], ['addrVillage','curVillage'],
-        ['addrSubdistrict','curSubdistrict'], ['addrDistrict','curDistrict'],
-        ['addrProvince','curProvince'], ['addrZip','curZip']
-      ];
-      if(on){
-        map.forEach(([a,c])=>{
-          const av = f.elements[a].value || '';
-          f.elements[c].value = av;
-        });
-      }
+    // คัดลอกที่อยู่ทะเบียนบ้าน -> ที่อยู่ปัจจุบัน (แบบติดตามการพิมพ์)
+    const sameAddr = document.getElementById('sameAddr');
+    const map = [
+      ['addrNo','curNo'], ['addrMoo','curMoo'], ['addrVillage','curVillage'],
+      ['addrSubdistrict','curSubdistrict'], ['addrDistrict','curDistrict'],
+      ['addrProvince','curProvince'], ['addrZip','curZip']
+    ];
+
+    function copyAddr(){
+      map.forEach(([a,c])=>{
+        f.elements[c].value = f.elements[a].value || '';
+      });
+    }
+
+    sameAddr.addEventListener('change', (e)=>{
+      if(e.target.checked) copyAddr();
     });
+
+    ['addrNo','addrMoo','addrVillage','addrSubdistrict','addrDistrict','addrProvince','addrZip'].forEach(name=>{
+      f.elements[name].addEventListener('input', ()=>{
+        if(sameAddr.checked) copyAddr();
+      });
+    });
+
+    function validateNumbers(){
+      const mobile = (f.elements.mobilePhone.value || '').trim();
+      const gphone = (f.elements.guardianPhone.value || '').trim();
+
+      if(mobile.length < 9) return 'เบอร์โทรศัพท์มือถือไม่ถูกต้อง';
+      if(gphone.length < 9) return 'เบอร์โทรผู้ปกครองไม่ถูกต้อง';
+
+      // ตรวจวันเกิด 1-31 แบบง่าย
+      const day = Number((f.elements.birthDay.value || '').trim());
+      if(!day || day < 1 || day > 31) return 'วันเกิดต้องอยู่ระหว่าง 1 ถึง 31';
+
+      const by = Number((f.elements.birthYear.value || '').trim());
+      if(!by || by < 2400 || by > 2700) return 'ปีเกิด (พ.ศ.) ดูไม่ถูกต้อง';
+
+      const zip1 = (f.elements.addrZip.value || '').trim();
+      const zip2 = (f.elements.curZip.value || '').trim();
+      if(zip1.length !== 5 || zip2.length !== 5) return 'รหัสไปรษณีย์ต้องมี 5 หลัก';
+
+      return '';
+    }
 
     f.addEventListener('submit', (e)=>{
       e.preventDefault();
       toast.style.display = 'none';
 
-      // ตรวจเบอร์โทรแบบง่าย
-      const mobile = (f.elements.mobilePhone.value || '').trim();
-      const gphone = (f.elements.guardianPhone.value || '').trim();
-      if(mobile.length < 9 || gphone.length < 9){
-        showError('เบอร์โทรดูเหมือนสั้นเกินไป ลองเช็คอีกที');
+      // ให้ browser โชว์ error ของ required ด้วย
+      if(!f.checkValidity()){
+        f.reportValidity();
+        showError('กรอกข้อมูลให้ครบทุกช่อง (ยกเว้นความสามารถพิเศษ)');
         return;
       }
 
-      // validate required ของเบราว์เซอร์
-      if(!f.checkValidity()){
-        showError('กรอกข้อมูลที่จำเป็นให้ครบก่อนบันทึก');
+      const extra = validateNumbers();
+      if(extra){
+        showError(extra);
         return;
       }
 
       const fd = new FormData(f);
       const appId = makeAppId();
 
-      // เก็บข้อมูล + “ชื่อไฟล์” (ไม่เก็บไฟล์จริง)
       const payload = {
         appId,
         student: {
@@ -640,61 +668,61 @@
           firstName: fd.get('firstName'),
           lastName: fd.get('lastName'),
           citizenId: fd.get('citizenId'),
-          race: fd.get('race') || '',
-          nationality: fd.get('nationality') || '',
-          birthDay: fd.get('birthDay') || '',
-          birthMonth: fd.get('birthMonth') || '',
-          birthYear: fd.get('birthYear') || '',
-          religion: fd.get('religion') || '',
-          talent: fd.get('talent') || ''
+          race: fd.get('race'),
+          nationality: fd.get('nationality'),
+          birthDay: fd.get('birthDay'),
+          birthMonth: fd.get('birthMonth'),
+          birthYear: fd.get('birthYear'),
+          religion: fd.get('religion'),
+          talent: fd.get('talent') || '' // ไม่บังคับ
         },
         address: {
           reg: {
-            no: fd.get('addrNo') || '',
-            moo: fd.get('addrMoo') || '',
-            village: fd.get('addrVillage') || '',
-            subdistrict: fd.get('addrSubdistrict') || '',
-            district: fd.get('addrDistrict') || '',
-            province: fd.get('addrProvince') || '',
-            zip: fd.get('addrZip') || '',
-            homePhone: fd.get('homePhone') || '',
-            mobilePhone: fd.get('mobilePhone') || ''
+            no: fd.get('addrNo'),
+            moo: fd.get('addrMoo'),
+            village: fd.get('addrVillage'),
+            subdistrict: fd.get('addrSubdistrict'),
+            district: fd.get('addrDistrict'),
+            province: fd.get('addrProvince'),
+            zip: fd.get('addrZip'),
+            homePhone: fd.get('homePhone'),
+            mobilePhone: fd.get('mobilePhone')
           },
           current: {
-            no: fd.get('curNo') || '',
-            moo: fd.get('curMoo') || '',
-            village: fd.get('curVillage') || '',
-            subdistrict: fd.get('curSubdistrict') || '',
-            district: fd.get('curDistrict') || '',
-            province: fd.get('curProvince') || '',
-            zip: fd.get('curZip') || ''
+            no: fd.get('curNo'),
+            moo: fd.get('curMoo'),
+            village: fd.get('curVillage'),
+            subdistrict: fd.get('curSubdistrict'),
+            district: fd.get('curDistrict'),
+            province: fd.get('curProvince'),
+            zip: fd.get('curZip')
           }
         },
         parent: {
           father: {
-            name: fd.get('fatherName') || '',
-            cid: fd.get('fatherCid') || '',
-            job: fd.get('fatherJob') || '',
-            income: fd.get('fatherIncome') || '',
-            alive: fd.get('fatherAlive') || 'มีชีวิต'
+            name: fd.get('fatherName'),
+            cid: fd.get('fatherCid'),
+            job: fd.get('fatherJob'),
+            income: fd.get('fatherIncome'),
+            alive: fd.get('fatherAlive')
           },
           mother: {
-            name: fd.get('motherName') || '',
-            cid: fd.get('motherCid') || '',
-            job: fd.get('motherJob') || '',
-            income: fd.get('motherIncome') || '',
-            alive: fd.get('motherAlive') || 'มีชีวิต'
+            name: fd.get('motherName'),
+            cid: fd.get('motherCid'),
+            job: fd.get('motherJob'),
+            income: fd.get('motherIncome'),
+            alive: fd.get('motherAlive')
           },
-          status: fd.get('parentStatus') || '',
+          status: fd.get('parentStatus'),
           guardian: fd.get('guardian'),
           guardianPhone: fd.get('guardianPhone')
         },
         education: {
-          gpa: fd.get('gpa') || '',
-          gpaSci: fd.get('gpaSci') || '',
-          gpaMath: fd.get('gpaMath') || '',
-          fromSchool: fd.get('fromSchool') || 'จากโรงเรียนเดิม',
-          prevSchool: fd.get('prevSchool') || ''
+          gpa: fd.get('gpa'),
+          gpaSci: fd.get('gpaSci'),
+          gpaMath: fd.get('gpaMath'),
+          fromSchool: fd.get('fromSchool'),
+          prevSchool: fd.get('prevSchool')
         },
         program: fd.get('program'),
         files: {
@@ -703,7 +731,7 @@
           slip: (document.getElementById('fileSlip').files[0]||{}).name || '',
           photo: (document.getElementById('filePhoto').files[0]||{}).name || ''
         },
-        note: fd.get('note') || '',
+        note: fd.get('note'),
         status: 'รอตรวจเอกสาร',
         createdAt: new Date().toISOString()
       };
