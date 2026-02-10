@@ -1,1 +1,377 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin | รับสมัครห้องเรียนพิเศษ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f6fbf7; --txt:#0f172a; --muted:#475569; --line:#e2e8f0;
+      --brand:#16a34a; --brand2:#22c55e; --shadow:0 18px 40px rgba(2,6,23,.08);
+      --bad:#ef4444; --ok:#16a34a;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"Sarabun",system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--txt)}
+    .wrap{max-width:1100px;margin:0 auto;padding:18px}
+    .top{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+    .card{border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:var(--shadow);padding:14px;margin-top:12px}
+    h1{margin:0;font-size:18px}
+    .muted{color:var(--muted)}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    input,select,textarea{
+      padding:10px 12px;border-radius:12px;border:1px solid var(--line);
+      font-family:inherit;min-width:220px
+    }
+    textarea{min-width:320px;min-height:80px}
+    button{
+      padding:10px 14px;border-radius:12px;border:0;cursor:pointer;
+      background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;font-weight:800
+    }
+    button.secondary{background:#fff;color:var(--txt);border:1px solid var(--line)}
+    .pill{padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:#fff}
+    table{width:100%;border-collapse:collapse}
+    th,td{border-bottom:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}
+    tr:hover{background:#f8fafc}
+    .tag{padding:4px 8px;border-radius:999px;border:1px solid var(--line);display:inline-block}
+    .tag.ok{border-color:#bbf7d0;background:#f0fdf4}
+    .tag.bad{border-color:#fecaca;background:#fff1f2}
+    .hidden{display:none !important}
+    .split{display:grid;grid-template-columns:1fr;gap:12px}
+    @media(min-width:900px){ .split{grid-template-columns: 1.2fr .8fr;} }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <h1>หลังบ้านตรวจเอกสาร (Admin/Staff)</h1>
+        <div class="muted" id="who">ยังไม่ได้ล็อกอิน</div>
+      </div>
+      <div class="row">
+        <button class="secondary" id="btnLogout">ออกจากระบบ</button>
+      </div>
+    </div>
 
+    <!-- LOGIN -->
+    <div class="card" id="loginCard">
+      <h2 style="margin:0 0 8px">เข้าสู่ระบบครู/เจ้าหน้าที่</h2>
+      <div class="row">
+        <input id="loginEmail" placeholder="อีเมล" />
+        <input id="loginPass" type="password" placeholder="รหัสผ่าน" />
+        <button id="btnLogin">เข้าสู่ระบบ</button>
+      </div>
+      <div class="muted" id="loginMsg" style="margin-top:8px"></div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="card hidden" id="mainCard">
+      <div class="row" style="justify-content:space-between">
+        <div class="row">
+          <span class="pill" id="rolePill">role: -</span>
+          <span class="pill">รายการใบสมัคร</span>
+        </div>
+        <div class="row">
+          <select id="filterLevel">
+            <option value="">ทุกระดับ</option>
+            <option value="ม.1">ม.1</option>
+            <option value="ม.4">ม.4</option>
+          </select>
+          <select id="filterStatus">
+            <option value="">ทุกสถานะ</option>
+            <option value="SUBMITTED">SUBMITTED</option>
+            <option value="DOC_CHECKING">DOC_CHECKING</option>
+            <option value="NEED_FIX">NEED_FIX</option>
+            <option value="DOC_OK">DOC_OK</option>
+            <option value="APPROVED">APPROVED</option>
+            <option value="REJECTED">REJECTED</option>
+          </select>
+          <button class="secondary" id="btnRefresh">รีเฟรช</button>
+        </div>
+      </div>
+
+      <div class="split" style="margin-top:12px">
+        <!-- LIST -->
+        <div>
+          <table>
+            <thead>
+              <tr>
+                <th style="width:180px">เลขใบสมัคร</th>
+                <th>ผู้สมัคร</th>
+                <th style="width:110px">ระดับ</th>
+                <th style="width:160px">สถานะ</th>
+                <th style="width:120px"></th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+          <div class="muted" id="listMsg" style="margin-top:10px"></div>
+        </div>
+
+        <!-- DETAIL + ACTION -->
+        <div>
+          <div class="card" style="box-shadow:none" id="detailCard">
+            <b>รายละเอียด</b>
+            <div class="muted" id="detailEmpty" style="margin-top:8px">เลือกใบสมัครจากตาราง</div>
+
+            <div id="detailBody" class="hidden" style="margin-top:10px">
+              <div><b id="dAppNo">-</b> <span class="muted" id="dLevel"></span></div>
+              <div class="muted" id="dName" style="margin-top:4px"></div>
+
+              <hr style="border:none;border-top:1px solid var(--line);margin:10px 0">
+
+              <div class="row">
+                <select id="toStatus">
+                  <option value="SUBMITTED">SUBMITTED</option>
+                  <option value="DOC_CHECKING">DOC_CHECKING</option>
+                  <option value="NEED_FIX">NEED_FIX</option>
+                  <option value="DOC_OK">DOC_OK</option>
+                  <option value="APPROVED">APPROVED</option>
+                  <option value="REJECTED">REJECTED</option>
+                </select>
+                <button id="btnUpdateStatus">เปลี่ยนสถานะ</button>
+              </div>
+
+              <label class="muted" style="display:block;margin-top:10px">หมายเหตุถึงผู้สมัคร (ผู้สมัครเห็น)</label>
+              <textarea id="noteToApplicant" placeholder="เช่น เอกสาร ปพ.7 ไม่ชัด กรุณาอัปโหลดใหม่"></textarea>
+
+              <label class="muted" style="display:block;margin-top:10px">หมายเหตุภายใน (เฉพาะเจ้าหน้าที่)</label>
+              <textarea id="noteInternal" placeholder="บันทึกภายใน"></textarea>
+
+              <div class="muted" id="actMsg" style="margin-top:8px"></div>
+
+              <hr style="border:none;border-top:1px solid var(--line);margin:10px 0">
+
+              <div><b>ไฟล์เอกสาร</b></div>
+              <div class="muted" style="margin-top:6px" id="filesBox"></div>
+            </div>
+          </div>
+
+          <!-- CREATE STAFF (admin only) -->
+          <div class="card hidden" id="createStaffCard" style="box-shadow:none">
+            <b>สร้างบัญชีครู/เจ้าหน้าที่ (admin เท่านั้น)</b>
+            <div class="row" style="margin-top:10px">
+              <input id="newEmail" placeholder="อีเมล staff" />
+              <input id="newPass" type="password" placeholder="รหัสผ่านชั่วคราว (>=6)" />
+              <button id="btnCreateStaff">สร้าง staff</button>
+            </div>
+            <div class="muted" id="createMsg" style="margin-top:8px"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDK (Compat for simple CDN use) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-functions-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-storage-compat.js"></script>
+
+  <script>
+    // 1) ใส่ config ของมึงตรงนี้
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT.firebaseapp.com",
+      projectId: "YOUR_PROJECT",
+      storageBucket: "YOUR_PROJECT.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    const fn = firebase.functions();
+    const st = firebase.storage();
+
+    const $ = (id)=>document.getElementById(id);
+
+    let me = { uid:null, email:null, role:null };
+    let selectedAppId = null;
+    let selectedApp = null;
+
+    function setText(id, txt){ $(id).textContent = txt; }
+
+    function tagStatus(s){
+      const good = ["DOC_OK","APPROVED"];
+      const bad  = ["NEED_FIX","REJECTED"];
+      const cls = good.includes(s) ? "ok" : bad.includes(s) ? "bad" : "";
+      return `<span class="tag ${cls}">${s || "-"}</span>`;
+    }
+
+    async function loadMyRole(uid){
+      const snap = await db.doc(`users/${uid}`).get();
+      if(!snap.exists) return null;
+      return snap.data().role || null;
+    }
+
+    async function refreshList(){
+      setText("listMsg","กำลังโหลด...");
+      $("tbody").innerHTML = "";
+
+      const level = $("filterLevel").value;
+      const status = $("filterStatus").value;
+
+      let q = db.collection("applications").orderBy("createdAt","desc").limit(50);
+      if(level) q = q.where("level","==",level);
+      if(status) q = q.where("status","==",status);
+
+      const snap = await q.get();
+      if(snap.empty){
+        setText("listMsg","ไม่พบข้อมูล");
+        return;
+      }
+      setText("listMsg",`แสดง ${snap.size} รายการล่าสุด`);
+
+      snap.forEach(doc=>{
+        const a = doc.data();
+        const name = a.student ? `${a.student.prefix||""}${a.student.firstName||""} ${a.student.lastName||""}`.trim() : "-";
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><b>${a.appNo||doc.id}</b><div class="muted">${doc.id}</div></td>
+          <td>${name || "-"}</td>
+          <td>${a.level || "-"}</td>
+          <td>${tagStatus(a.status)}</td>
+          <td><button class="secondary" data-id="${doc.id}">เปิด</button></td>
+        `;
+        tr.querySelector("button").addEventListener("click", ()=>openDetail(doc.id, a));
+        $("tbody").appendChild(tr);
+      });
+    }
+
+    async function openDetail(appId, app){
+      selectedAppId = appId;
+      selectedApp = app;
+
+      $("detailEmpty").classList.add("hidden");
+      $("detailBody").classList.remove("hidden");
+
+      setText("dAppNo", app.appNo || appId);
+      setText("dLevel", `(${app.level || "-"})`);
+
+      const name = app.student ? `${app.student.prefix||""}${app.student.firstName||""} ${app.student.lastName||""}`.trim() : "-";
+      setText("dName", name || "-");
+
+      $("toStatus").value = app.status || "SUBMITTED";
+      $("noteToApplicant").value = app.statusNoteToApplicant || "";
+      $("noteInternal").value = "";
+
+      // ไฟล์: ใช้ path ใน storage (แนะนำให้เก็บเป็น path)
+      const files = app.files || {};
+      const items = [
+        ["บัตรประชาชน", files.citizenPath],
+        ["ปพ.7/ปพ.1", files.transcriptPath],
+        ["สลิป", files.slipPath],
+        ["รูปถ่าย", files.photoPath],
+      ];
+
+      const links = [];
+      for(const [label, path] of items){
+        if(!path){ links.push(`<div>• ${label}: <span class="muted">ไม่มี path</span></div>`); continue; }
+        try{
+          const url = await st.ref(path).getDownloadURL();
+          links.push(`<div>• ${label}: <a target="_blank" rel="noreferrer" href="${url}">เปิดไฟล์</a> <span class="muted">(${path})</span></div>`);
+        }catch(e){
+          links.push(`<div>• ${label}: <span class="muted">เปิดไม่ได้ (ตรวจ rules/path)</span> <span class="muted">(${path})</span></div>`);
+        }
+      }
+      $("filesBox").innerHTML = links.join("");
+    }
+
+    async function doUpdateStatus(){
+      if(!selectedAppId) return;
+      setText("actMsg","กำลังอัปเดต...");
+
+      const toStatus = $("toStatus").value;
+      const noteToApplicant = $("noteToApplicant").value.trim();
+      const noteInternal = $("noteInternal").value.trim();
+
+      // แนะนำ: ถ้า NEED_FIX / REJECTED ต้องมีข้อความถึงผู้สมัคร
+      if((toStatus==="NEED_FIX" || toStatus==="REJECTED") && noteToApplicant.length < 3){
+        setText("actMsg","ต้องใส่หมายเหตุถึงผู้สมัคร (อย่างน้อย 3 ตัวอักษร)");
+        return;
+      }
+
+      const callable = fn.httpsCallable("updateStatus");
+      await callable({ appId: selectedAppId, toStatus, noteToApplicant, noteInternal });
+
+      setText("actMsg","อัปเดตสำเร็จ");
+      await refreshList();
+
+      // รีโหลด detail จาก DB ให้สถานะตรง
+      const snap = await db.doc(`applications/${selectedAppId}`).get();
+      if(snap.exists) openDetail(selectedAppId, snap.data());
+    }
+
+    async function doCreateStaff(){
+      setText("createMsg","กำลังสร้าง...");
+      const email = $("newEmail").value.trim();
+      const password = $("newPass").value.trim();
+
+      const callable = fn.httpsCallable("createStaffUser");
+      try{
+        const res = await callable({ email, password });
+        setText("createMsg",`สร้างสำเร็จ uid: ${res.data.uid}`);
+        $("newEmail").value = "";
+        $("newPass").value = "";
+      }catch(e){
+        setText("createMsg", e.message || "สร้างไม่สำเร็จ");
+      }
+    }
+
+    $("btnLogin").addEventListener("click", async ()=>{
+      setText("loginMsg","");
+      try{
+        const email = $("loginEmail").value.trim();
+        const pass  = $("loginPass").value.trim();
+        await auth.signInWithEmailAndPassword(email, pass);
+      }catch(e){
+        setText("loginMsg", e.message || "ล็อกอินไม่สำเร็จ");
+      }
+    });
+
+    $("btnLogout").addEventListener("click", async ()=>{
+      await auth.signOut();
+    });
+
+    $("btnRefresh").addEventListener("click", refreshList);
+    $("filterLevel").addEventListener("change", refreshList);
+    $("filterStatus").addEventListener("change", refreshList);
+
+    $("btnUpdateStatus").addEventListener("click", doUpdateStatus);
+    $("btnCreateStaff").addEventListener("click", doCreateStaff);
+
+    auth.onAuthStateChanged(async (u)=>{
+      if(!u){
+        me = { uid:null, email:null, role:null };
+        $("loginCard").classList.remove("hidden");
+        $("mainCard").classList.add("hidden");
+        setText("who","ยังไม่ได้ล็อกอิน");
+        return;
+      }
+      me.uid = u.uid;
+      me.email = u.email;
+
+      // role จาก Firestore
+      const r = await loadMyRole(u.uid);
+      me.role = r || "staff";
+
+      $("loginCard").classList.add("hidden");
+      $("mainCard").classList.remove("hidden");
+
+      setText("who", `ล็อกอิน: ${me.email}`);
+      setText("rolePill", `role: ${me.role}`);
+
+      // แสดงกล่องสร้าง staff เฉพาะ admin
+      if(me.role === "admin") $("createStaffCard").classList.remove("hidden");
+      else $("createStaffCard").classList.add("hidden");
+
+      await refreshList();
+    });
+  </script>
+</body>
+</html>
