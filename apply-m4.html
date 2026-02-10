@@ -99,12 +99,14 @@
     .req{color:#ef4444;font-weight:800}
 
     .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
+    .col2{grid-column:span 12}
     .col3{grid-column:span 12}
     .col4{grid-column:span 12}
     .col6{grid-column:span 12}
     .col8{grid-column:span 12}
     .col12{grid-column:span 12}
     @media(min-width:860px){
+      .col2{grid-column:span 2}
       .col3{grid-column:span 3}
       .col4{grid-column:span 4}
       .col6{grid-column:span 6}
@@ -175,7 +177,6 @@
     </div>
 
     <form id="f" class="card" novalidate>
-      <!-- ข้อมูลนักเรียน -->
       <div class="cardhead">
         <div class="title">
           <div class="icon">👤</div>
@@ -206,8 +207,8 @@
         </div>
 
         <div class="col6">
-          <label>รหัสบัตรประชาชน <span class="req">*</span></label>
-          <input name="citizenId" required inputmode="numeric" placeholder="x-xxxx-xxxxx-xx-x" />
+          <label>รหัสบัตรประชาชน (13 หลัก) <span class="req">*</span></label>
+          <input name="citizenId" required inputmode="numeric" placeholder="xxxxxxxxxxxxx" />
         </div>
         <div class="col3">
           <label>เชื้อชาติ <span class="req">*</span></label>
@@ -219,7 +220,7 @@
         </div>
 
         <div class="col4">
-          <label>วันเกิด <span class="req">*</span></label>
+          <label>วันเกิด (1–31) <span class="req">*</span></label>
           <input name="birthDay" required inputmode="numeric" placeholder="เช่น 7" />
         </div>
         <div class="col4">
@@ -246,7 +247,6 @@
         </div>
       </div>
 
-      <!-- ที่อยู่ -->
       <hr class="sep" />
       <div class="cardhead" style="border-bottom:none;margin-bottom:0;padding-bottom:0">
         <div class="title">
@@ -293,7 +293,6 @@
         </div>
       </div>
 
-      <!-- บิดามารดา -->
       <hr class="sep" />
       <div class="cardhead" style="border-bottom:none;margin-bottom:0;padding-bottom:0">
         <div class="title">
@@ -304,7 +303,7 @@
 
       <div class="grid" style="margin-top:8px">
         <div class="col6"><label>ชื่อ-สกุล บิดา <span class="req">*</span></label><input name="fatherName" required /></div>
-        <div class="col6"><label>เลขบัตรประชาชนบิดา <span class="req">*</span></label><input name="fatherCid" required inputmode="numeric" placeholder="x-xxxx-xxxxx-xx-x" /></div>
+        <div class="col6"><label>เลขบัตรประชาชนบิดา <span class="req">*</span></label><input name="fatherCid" required inputmode="numeric" placeholder="xxxxxxxxxxxxx" /></div>
         <div class="col4"><label>อาชีพบิดา <span class="req">*</span></label><input name="fatherJob" required /></div>
         <div class="col4"><label>รายได้ต่อเดือน (บิดา) <span class="req">*</span></label><input name="fatherIncome" required inputmode="numeric" /></div>
         <div class="col4">
@@ -316,7 +315,7 @@
         </div>
 
         <div class="col6"><label>ชื่อ-สกุล มารดา <span class="req">*</span></label><input name="motherName" required /></div>
-        <div class="col6"><label>เลขบัตรประชาชนมารดา <span class="req">*</span></label><input name="motherCid" required inputmode="numeric" placeholder="x-xxxx-xxxxx-xx-x" /></div>
+        <div class="col6"><label>เลขบัตรประชาชนมารดา <span class="req">*</span></label><input name="motherCid" required inputmode="numeric" placeholder="xxxxxxxxxxxxx" /></div>
         <div class="col4"><label>อาชีพมารดา <span class="req">*</span></label><input name="motherJob" required /></div>
         <div class="col4"><label>รายได้ต่อเดือน (มารดา) <span class="req">*</span></label><input name="motherIncome" required inputmode="numeric" /></div>
         <div class="col4">
@@ -353,7 +352,6 @@
         </div>
       </div>
 
-      <!-- การศึกษา -->
       <hr class="sep" />
       <div class="cardhead" style="border-bottom:none;margin-bottom:0;padding-bottom:0">
         <div class="title">
@@ -385,7 +383,6 @@
         </div>
       </div>
 
-      <!-- หลักสูตร -->
       <hr class="sep" />
       <div class="cardhead" style="border-bottom:none;margin-bottom:0;padding-bottom:0">
         <div class="title">
@@ -400,7 +397,6 @@
         <label><input type="radio" name="program" value="SME" required> SME : วิทยาศาสตร์-คณิตศาสตร์ ภาษาอังกฤษ</label>
       </div>
 
-      <!-- แนบไฟล์ -->
       <hr class="sep" />
       <div class="cardhead" style="border-bottom:none;margin-bottom:0;padding-bottom:0">
         <div class="title">
@@ -452,6 +448,8 @@
       toast.textContent = msg || 'กรอกข้อมูลให้ครบก่อนบันทึก';
       toast.scrollIntoView({behavior:'smooth', block:'start'});
     }
+
+    function digitsOnly(s){ return (s||'').replace(/\D/g,''); }
 
     function makeAppId(){
       const t = new Date();
@@ -515,20 +513,37 @@
     setOtherSchoolUI();
 
     function validateNumbers(){
-      const mobile = (f.elements.mobilePhone.value || '').trim();
-      const gphone = (f.elements.guardianPhone.value || '').trim();
+      const mobile = digitsOnly(f.elements.mobilePhone.value);
+      const gphone = digitsOnly(f.elements.guardianPhone.value);
       if(mobile.length < 9) return 'เบอร์โทรศัพท์มือถือไม่ถูกต้อง';
       if(gphone.length < 9) return 'เบอร์โทรผู้ปกครองไม่ถูกต้อง';
 
-      const day = Number((f.elements.birthDay.value || '').trim());
+      const day = Number(digitsOnly(f.elements.birthDay.value));
       if(!day || day < 1 || day > 31) return 'วันเกิดต้องอยู่ระหว่าง 1 ถึง 31';
 
-      const by = Number((f.elements.birthYear.value || '').trim());
+      const by = Number(digitsOnly(f.elements.birthYear.value));
       if(!by || by < 2400 || by > 2700) return 'ปีเกิด (พ.ศ.) ดูไม่ถูกต้อง';
 
-      const zip1 = (f.elements.addrZip.value || '').trim();
-      const zip2 = (f.elements.curZip.value || '').trim();
+      const zip1 = digitsOnly(f.elements.addrZip.value);
+      const zip2 = digitsOnly(f.elements.curZip.value);
       if(zip1.length !== 5 || zip2.length !== 5) return 'รหัสไปรษณีย์ต้องมี 5 หลัก';
+
+      const cid = digitsOnly(f.elements.citizenId.value);
+      if(cid.length !== 13) return 'เลขบัตรประชาชนต้องมี 13 หลัก';
+
+      const fcid = digitsOnly(f.elements.fatherCid.value);
+      if(fcid.length !== 13) return 'เลขบัตรประชาชนบิดาต้องมี 13 หลัก';
+
+      const mcid = digitsOnly(f.elements.motherCid.value);
+      if(mcid.length !== 13) return 'เลขบัตรประชาชนมารดาต้องมี 13 หลัก';
+
+      function isNum(v){
+        v = (v||'').trim().replace(',', '.');
+        return v !== '' && !Number.isNaN(Number(v));
+      }
+      if(!isNum(f.elements.gpa.value)) return 'GPA ต้องเป็นตัวเลข';
+      if(!isNum(f.elements.gpaSci.value)) return 'เกรดวิทย์ต้องเป็นตัวเลข';
+      if(!isNum(f.elements.gpaMath.value)) return 'เกรดคณิตต้องเป็นตัวเลข';
 
       return '';
     }
@@ -544,10 +559,7 @@
       }
 
       const extra = validateNumbers();
-      if(extra){
-        showError(extra);
-        return;
-      }
+      if(extra){ showError(extra); return; }
 
       const fd = new FormData(f);
       const appId = makeAppId();
@@ -559,12 +571,12 @@
           prefix: fd.get('prefix'),
           firstName: fd.get('firstName'),
           lastName: fd.get('lastName'),
-          citizenId: fd.get('citizenId'),
+          citizenId: digitsOnly(fd.get('citizenId')),
           race: fd.get('race'),
           nationality: fd.get('nationality'),
-          birthDay: fd.get('birthDay'),
+          birthDay: digitsOnly(fd.get('birthDay')),
           birthMonth: fd.get('birthMonth'),
-          birthYear: fd.get('birthYear'),
+          birthYear: digitsOnly(fd.get('birthYear')),
           religion: fd.get('religion'),
           talent: fd.get('talent') || ''
         },
@@ -576,9 +588,9 @@
             subdistrict: fd.get('addrSubdistrict'),
             district: fd.get('addrDistrict'),
             province: fd.get('addrProvince'),
-            zip: fd.get('addrZip'),
+            zip: digitsOnly(fd.get('addrZip')),
             homePhone: fd.get('homePhone'),
-            mobilePhone: fd.get('mobilePhone')
+            mobilePhone: digitsOnly(fd.get('mobilePhone'))
           },
           current: {
             no: fd.get('curNo'),
@@ -587,32 +599,32 @@
             subdistrict: fd.get('curSubdistrict'),
             district: fd.get('curDistrict'),
             province: fd.get('curProvince'),
-            zip: fd.get('curZip')
+            zip: digitsOnly(fd.get('curZip'))
           }
         },
         parent: {
           father: {
             name: fd.get('fatherName'),
-            cid: fd.get('fatherCid'),
+            cid: digitsOnly(fd.get('fatherCid')),
             job: fd.get('fatherJob'),
-            income: fd.get('fatherIncome'),
+            income: digitsOnly(fd.get('fatherIncome')),
             alive: fd.get('fatherAlive')
           },
           mother: {
             name: fd.get('motherName'),
-            cid: fd.get('motherCid'),
+            cid: digitsOnly(fd.get('motherCid')),
             job: fd.get('motherJob'),
-            income: fd.get('motherIncome'),
+            income: digitsOnly(fd.get('motherIncome')),
             alive: fd.get('motherAlive')
           },
           status: fd.get('parentStatus'),
           guardian: fd.get('guardian'),
-          guardianPhone: fd.get('guardianPhone')
+          guardianPhone: digitsOnly(fd.get('guardianPhone'))
         },
         education: {
-          gpa: fd.get('gpa'),
-          gpaSci: fd.get('gpaSci'),
-          gpaMath: fd.get('gpaMath'),
+          gpa: String(fd.get('gpa')).trim(),
+          gpaSci: String(fd.get('gpaSci')).trim(),
+          gpaMath: String(fd.get('gpaMath')).trim(),
           fromSchool: fd.get('fromSchool'),
           prevSchool: fd.get('prevSchool') || '',
           prevSubdistrict: fd.get('prevSubdistrict') || '',
