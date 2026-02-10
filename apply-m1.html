@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="th">
 <head>
@@ -98,12 +97,14 @@
     .req{color:#ef4444;font-weight:800}
 
     .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
+    .col2{grid-column:span 12}
     .col3{grid-column:span 12}
     .col4{grid-column:span 12}
     .col6{grid-column:span 12}
     .col8{grid-column:span 12}
     .col12{grid-column:span 12}
     @media(min-width:860px){
+      .col2{grid-column:span 2}
       .col3{grid-column:span 3}
       .col4{grid-column:span 4}
       .col6{grid-column:span 6}
@@ -216,12 +217,8 @@
           <label>วันเดือนปีเกิด <span class="req">*</span></label>
           <div class="grid">
             <div class="col4">
-              <select name="birthDay" required>
+              <select id="birthDay" name="birthDay" required>
                 <option value="">วันที่</option>
-                <!-- 1-31 -->
-                <script>
-                  // จะถูกแทนด้วย JS ตอนโหลด (กันยาว)
-                </script>
               </select>
             </div>
             <div class="col4">
@@ -233,9 +230,8 @@
               </select>
             </div>
             <div class="col4">
-              <select name="birthYear" required>
+              <select id="birthYear" name="birthYear" required>
                 <option value="">ปี พ.ศ.</option>
-                <!-- เติมปีด้วย JS -->
               </select>
             </div>
           </div>
@@ -489,7 +485,7 @@
       <div class="actions">
         <button type="submit">บันทึกข้อมูล</button>
       </div>
-      <div class="mini">เดโมนี้ไม่อัปโหลดไฟล์จริง (เบราว์เซอร์ไม่ให้เก็บไฟล์ลง localStorage) จะเก็บแค่ “ชื่อไฟล์” และข้อมูลฟอร์ม</div>
+      <div class="mini">เดโมนี้ไม่อัปโหลดไฟล์จริง จะเก็บแค่ “ชื่อไฟล์” และข้อมูลฟอร์ม</div>
     </form>
   </div>
 
@@ -498,6 +494,7 @@
     const toast = document.getElementById('toast');
 
     function showError(msg){
+      if(!msg) msg = 'กรอกข้อมูลให้ครบทุกช่อง (ยกเว้นความสามารถพิเศษ)';
       toast.style.display = 'block';
       toast.textContent = msg;
       toast.scrollIntoView({behavior:'smooth', block:'start'});
@@ -512,16 +509,17 @@
       return `M1-${y}${m}${d}-${r}`;
     }
 
-    // เติมวัน/ปีเกิดแบบ dropdown
+    // เติมวัน/ปีเกิดแบบ dropdown (ไม่ใส่ <script> ใน <select>)
     (function fillDOB(){
-      const daySel = f.elements.birthDay;
+      const daySel = document.getElementById('birthDay');
       for(let i=1;i<=31;i++){
         const op = document.createElement('option');
         op.value = String(i);
         op.textContent = String(i);
         daySel.appendChild(op);
       }
-      const yearSel = f.elements.birthYear;
+
+      const yearSel = document.getElementById('birthYear');
       const nowY = new Date().getFullYear() + 543; // พ.ศ.
       for(let y=nowY; y>=2400; y--){
         const op = document.createElement('option');
@@ -572,6 +570,7 @@
 
       const gpa = (f.elements.gpa.value || '').trim();
       if(!gpa) return 'กรอกเกรดเฉลี่ยให้ครบ';
+
       return '';
     }
 
@@ -669,7 +668,6 @@
       localStorage.setItem('latestApplication', JSON.stringify(payload));
       localStorage.setItem('latestApplicationId', appId);
 
-      // ไปหน้าสำเร็จ (ถ้ามึงใช้ไฟล์เดิม)
       window.location.href = 'success.html';
     });
   </script>
