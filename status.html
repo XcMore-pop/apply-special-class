@@ -3,28 +3,45 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>เช็คสถานะ</title>
+  <title>เช็คสถานะใบสมัคร</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{--line:#223252;--txt:#e6eefc;--muted:#a9b7d3;}
-    body{margin:0;font-family:system-ui,-apple-system,"Sarabun",sans-serif;background:linear-gradient(180deg,#071022,#0b1220);color:var(--txt)}
+    :root{--bg:#f6fbf7;--card:#fff;--txt:#0f172a;--muted:#475569;--line:#e2e8f0;--brand:#16a34a;--brand2:#22c55e;--shadow:0 18px 40px rgba(2,6,23,.08);}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"Sarabun",system-ui,-apple-system,sans-serif;background:radial-gradient(900px 450px at 20% 0%, rgba(34,197,94,.18), transparent 55%), var(--bg);color:var(--txt)}
     .wrap{max-width:900px;margin:0 auto;padding:22px}
-    .card{border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.03);padding:18px}
-    input{width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.15);color:var(--txt);outline:none}
-    button,a{display:inline-flex;gap:10px;align-items:center;margin-top:12px;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.02);color:var(--txt);text-decoration:none;cursor:pointer}
+    a.back{display:inline-flex;gap:10px;align-items:center;text-decoration:none;color:var(--txt);padding:10px 12px;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 10px 22px rgba(2,6,23,.06)}
+    .card{margin-top:14px;border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.92);box-shadow:var(--shadow);padding:18px}
+    h2{margin:0 0 8px}
     .muted{color:var(--muted)}
+    input{width:100%;padding:12px 12px;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--txt);outline:none;margin-top:10px}
+    .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    button,a.btn{display:inline-flex;gap:10px;align-items:center;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--txt);cursor:pointer;text-decoration:none;box-shadow:0 10px 22px rgba(2,6,23,.06)}
+    button.primary{border-color:transparent;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;box-shadow:0 16px 30px rgba(22,163,74,.22)}
+    .result{margin-top:14px;border:1px solid var(--line);border-radius:18px;background:#fff;padding:14px;display:none}
+    .tag{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid rgba(22,163,74,.20);background:rgba(22,163,74,.10);color:var(--brand);font-weight:700;font-size:13px}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:10px;margin-top:10px}
+    .box{grid-column:span 12;border:1px solid var(--line);border-radius:16px;padding:12px;background:rgba(248,250,252,.7)}
+    @media(min-width:860px){.box.half{grid-column:span 6}}
   </style>
 </head>
 <body>
   <div class="wrap">
-    <a href="index.html">← กลับหน้าแรก</a>
-    <h2 style="margin:14px 0 10px">เช็คสถานะใบสมัคร</h2>
+    <a class="back" href="index.html">← กลับหน้าแรก</a>
 
     <div class="card">
+      <h2>เช็คสถานะใบสมัคร</h2>
       <div class="muted">กรอกเลขใบสมัคร (เช่น APP-20260210-1234)</div>
-      <input id="q" placeholder="เลขใบสมัคร" />
-      <button onclick="check()">🔎 ค้นหา</button>
 
-      <div id="result" style="margin-top:14px"></div>
+      <input id="q" placeholder="เลขใบสมัคร" />
+      <div class="row">
+        <button class="primary" onclick="check()">🔎 ค้นหา</button>
+        <button onclick="fillLatest()">⚡ ใส่เลขล่าสุด</button>
+      </div>
+
+      <div id="result" class="result"></div>
     </div>
   </div>
 
@@ -32,22 +49,38 @@
     const latest = JSON.parse(localStorage.getItem('latestApplication') || 'null');
     const latestId = localStorage.getItem('latestApplicationId') || '';
 
+    function fillLatest(){
+      document.getElementById('q').value = latestId || '';
+      if(latestId) check();
+    }
+
     function check(){
       const q = document.getElementById('q').value.trim();
-      const box = document.getElementById('result');
-      box.innerHTML = '';
+      const el = document.getElementById('result');
+      el.style.display = 'block';
 
-      if(!q){ box.innerHTML = '<div class="muted">กรอกเลขก่อน</div>'; return; }
+      if(!q){
+        el.innerHTML = `<div class="muted">กรอกเลขก่อน</div>`;
+        return;
+      }
 
       if(latest && q === latestId){
-        box.innerHTML = `
-          <div style="font-size:18px;font-weight:700">${latest.appId}</div>
-          <div class="muted">สถานะ: <b>${latest.status}</b></div>
-          <div class="muted">โปรแกรม: ${latest.program} | ชั้น: ${latest.grade}</div>
-          <div class="muted">ยื่นเมื่อ: ${new Date(latest.createdAt).toLocaleString('th-TH')}</div>
+        const dt = new Date(latest.createdAt).toLocaleString('th-TH');
+        el.innerHTML = `
+          <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
+            <div style="font-size:18px;font-weight:800">${latest.appId}</div>
+            <span class="tag">สถานะ: ${latest.status}</span>
+          </div>
+
+          <div class="grid">
+            <div class="box half"><b>ชื่อผู้สมัคร</b><div class="muted">${latest.studentName}</div></div>
+            <div class="box half"><b>ชั้น / โปรแกรม</b><div class="muted">${latest.grade} • ${latest.program}</div></div>
+            <div class="box half"><b>ยื่นเมื่อ</b><div class="muted">${dt}</div></div>
+            <div class="box half"><b>ติดต่อ</b><div class="muted">${latest.phone}</div></div>
+          </div>
         `;
       }else{
-        box.innerHTML = '<div class="muted">ไม่พบข้อมูล (เดโมนี้เช็คได้เฉพาะใบสมัครล่าสุดในเครื่องนี้)</div>';
+        el.innerHTML = `<div class="muted">ไม่พบข้อมูล (เดโมนี้เช็คได้เฉพาะใบสมัครล่าสุดในเครื่องนี้)</div>`;
       }
     }
   </script>
