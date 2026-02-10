@@ -103,11 +103,13 @@
     .hint{color:var(--muted);font-size:13px}
 
     .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
+    .col3{grid-column:span 12}
     .col4{grid-column:span 12}
     .col6{grid-column:span 12}
     .col8{grid-column:span 12}
     .col12{grid-column:span 12}
     @media(min-width:860px){
+      .col3{grid-column:span 3}
       .col4{grid-column:span 4}
       .col6{grid-column:span 6}
       .col8{grid-column:span 8}
@@ -124,9 +126,7 @@
     }
     textarea{min-height:92px;resize:vertical}
     .rowinline{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-    .radio{
-      display:flex;gap:10px;flex-wrap:wrap;align-items:center
-    }
+    .radio{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
     .radio label{
       margin:0;
       padding:10px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;
@@ -142,9 +142,7 @@
       border:1px solid var(--warnbd); background:var(--warnbg); color:var(--warn);
       padding:10px 12px;border-radius:16px;display:none;margin-top:10px;
     }
-    .actions{
-      display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-top:12px
-    }
+    .actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-top:12px}
     button,a.btn{
       display:inline-flex;gap:10px;align-items:center;
       padding:12px 14px;border-radius:14px;border:1px solid var(--line);
@@ -177,11 +175,11 @@
   <div class="wrap">
     <div class="header">
       <h1>โรงเรียน / โครงการห้องเรียนพิเศษ</h1>
-      <div class="sub">กรอกข้อมูลให้ตรงตามเอกสารจริง (บังคับกรอกทุกช่อง ยกเว้น “ความสามารถพิเศษ”)</div>
+      <div class="sub">กรอกข้อมูลให้ตรงตามเอกสารจริง (บังคับกรอกทุกช่อง ยกเว้น “ความสามารถพิเศษ”) และ “โรงเรียนเดิม” จะขึ้นเมื่อเลือก “จากโรงเรียนอื่น”</div>
       <div class="pillrow">
         <div class="pill">รองรับมือถือ/คอม</div>
         <div class="pill">แนบไฟล์ PDF/JPG/PNG</div>
-        <div class="pill">ทุกช่องต้องกรอก</div>
+        <div class="pill">ซ่อน/โชว์ตามเงื่อนไข</div>
       </div>
       <div id="toast" class="toast"></div>
     </div>
@@ -201,7 +199,6 @@
       </aside>
 
       <main class="main">
-        <!-- ข้อมูลนักเรียน -->
         <section id="sec-student" class="card">
           <div class="cardhead">
             <div class="title">
@@ -274,7 +271,6 @@
           </div>
         </section>
 
-        <!-- ที่อยู่ -->
         <section id="sec-address" class="card">
           <div class="cardhead">
             <div class="title">
@@ -352,7 +348,6 @@
           </div>
         </section>
 
-        <!-- บิดามารดา -->
         <section id="sec-parent" class="card">
           <div class="cardhead">
             <div class="title">
@@ -440,7 +435,6 @@
           </div>
         </section>
 
-        <!-- การศึกษา -->
         <section id="sec-edu" class="card">
           <div class="cardhead">
             <div class="title">
@@ -466,21 +460,37 @@
               <input name="gpaMath" required inputmode="decimal" placeholder="เช่น 3.75" />
             </div>
 
-            <div class="col6">
+            <div class="col12">
               <label>สำเร็จการศึกษาหรือกำลังศึกษาอยู่ชั้น ม.3 <span class="req">*</span></label>
               <div class="radio">
                 <label><input type="radio" name="fromSchool" value="จากโรงเรียนเดิม" checked required> จากโรงเรียนเดิม</label>
                 <label><input type="radio" name="fromSchool" value="จากโรงเรียนอื่น" required> จากโรงเรียนอื่น</label>
               </div>
             </div>
-            <div class="col6">
-              <label>โรงเรียนเดิม <span class="req">*</span></label>
-              <input name="prevSchool" required placeholder="ชื่อโรงเรียนเดิม" />
+
+            <div id="otherSchoolBox" class="col12" style="display:none">
+              <div class="grid">
+                <div class="col6">
+                  <label>ชื่อโรงเรียนเดิม <span class="req">*</span></label>
+                  <input id="prevSchool" name="prevSchool" placeholder="ชื่อโรงเรียนเดิม" />
+                </div>
+                <div class="col3">
+                  <label>ตำบล <span class="req">*</span></label>
+                  <input id="prevSubdistrict" name="prevSubdistrict" placeholder="ตำบล" />
+                </div>
+                <div class="col3">
+                  <label>อำเภอ <span class="req">*</span></label>
+                  <input id="prevDistrict" name="prevDistrict" placeholder="อำเภอ" />
+                </div>
+                <div class="col6">
+                  <label>จังหวัด <span class="req">*</span></label>
+                  <input id="prevProvince" name="prevProvince" placeholder="จังหวัด" />
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        <!-- หลักสูตร -->
         <section id="sec-program" class="card">
           <div class="cardhead">
             <div class="title">
@@ -503,7 +513,6 @@
           </div>
         </section>
 
-        <!-- แนบไฟล์ -->
         <section id="sec-files" class="card">
           <div class="cardhead">
             <div class="title">
@@ -538,7 +547,6 @@
                 <input id="fileSlip" name="fileSlip" type="file" required accept=".pdf,.jpg,.jpeg,.png" />
                 <div id="nameSlip" class="filename">ยังไม่ได้เลือกไฟล์</div>
               </div>
-              <div class="hint" style="margin-top:6px">ในระบบจริงสามารถใส่รายละเอียดบัญชี/QR ได้</div>
             </div>
 
             <div class="col12">
@@ -551,7 +559,7 @@
 
             <div class="col12">
               <label>หมายเหตุเพิ่มเติม <span class="req">*</span></label>
-              <textarea name="note" required placeholder="กรอกหมายเหตุ (ถ้าไม่มีให้ใส่ “-”)"></textarea>
+              <textarea name="note" required placeholder="ถ้าไม่มีให้ใส่ “-”"></textarea>
             </div>
           </div>
 
@@ -596,38 +604,51 @@
     bindFileName('fileSlip','nameSlip');
     bindFileName('filePhoto','namePhoto');
 
-    // คัดลอกที่อยู่ทะเบียนบ้าน -> ที่อยู่ปัจจุบัน (แบบติดตามการพิมพ์)
     const sameAddr = document.getElementById('sameAddr');
-    const map = [
+    const addrMap = [
       ['addrNo','curNo'], ['addrMoo','curMoo'], ['addrVillage','curVillage'],
       ['addrSubdistrict','curSubdistrict'], ['addrDistrict','curDistrict'],
       ['addrProvince','curProvince'], ['addrZip','curZip']
     ];
-
     function copyAddr(){
-      map.forEach(([a,c])=>{
+      addrMap.forEach(([a,c])=>{
         f.elements[c].value = f.elements[a].value || '';
       });
     }
-
-    sameAddr.addEventListener('change', (e)=>{
-      if(e.target.checked) copyAddr();
-    });
-
+    sameAddr.addEventListener('change', (e)=>{ if(e.target.checked) copyAddr(); });
     ['addrNo','addrMoo','addrVillage','addrSubdistrict','addrDistrict','addrProvince','addrZip'].forEach(name=>{
-      f.elements[name].addEventListener('input', ()=>{
-        if(sameAddr.checked) copyAddr();
-      });
+      f.elements[name].addEventListener('input', ()=>{ if(sameAddr.checked) copyAddr(); });
     });
+
+    const otherSchoolBox = document.getElementById('otherSchoolBox');
+    const prevSchool = document.getElementById('prevSchool');
+    const prevSubdistrict = document.getElementById('prevSubdistrict');
+    const prevDistrict = document.getElementById('prevDistrict');
+    const prevProvince = document.getElementById('prevProvince');
+
+    function setOtherSchoolUI(){
+      const v = (f.querySelector('input[name="fromSchool"]:checked') || {}).value || 'จากโรงเรียนเดิม';
+      const isOther = v === 'จากโรงเรียนอื่น';
+
+      otherSchoolBox.style.display = isOther ? 'block' : 'none';
+      [prevSchool, prevSubdistrict, prevDistrict, prevProvince].forEach(el=>{
+        if(!el) return;
+        el.required = isOther;
+        if(!isOther) el.value = '';
+      });
+    }
+
+    f.querySelectorAll('input[name="fromSchool"]').forEach(r=>{
+      r.addEventListener('change', setOtherSchoolUI);
+    });
+    setOtherSchoolUI();
 
     function validateNumbers(){
       const mobile = (f.elements.mobilePhone.value || '').trim();
       const gphone = (f.elements.guardianPhone.value || '').trim();
-
       if(mobile.length < 9) return 'เบอร์โทรศัพท์มือถือไม่ถูกต้อง';
       if(gphone.length < 9) return 'เบอร์โทรผู้ปกครองไม่ถูกต้อง';
 
-      // ตรวจวันเกิด 1-31 แบบง่าย
       const day = Number((f.elements.birthDay.value || '').trim());
       if(!day || day < 1 || day > 31) return 'วันเกิดต้องอยู่ระหว่าง 1 ถึง 31';
 
@@ -645,7 +666,6 @@
       e.preventDefault();
       toast.style.display = 'none';
 
-      // ให้ browser โชว์ error ของ required ด้วย
       if(!f.checkValidity()){
         f.reportValidity();
         showError('กรอกข้อมูลให้ครบทุกช่อง (ยกเว้นความสามารถพิเศษ)');
@@ -674,7 +694,7 @@
           birthMonth: fd.get('birthMonth'),
           birthYear: fd.get('birthYear'),
           religion: fd.get('religion'),
-          talent: fd.get('talent') || '' // ไม่บังคับ
+          talent: fd.get('talent') || ''
         },
         address: {
           reg: {
@@ -722,7 +742,10 @@
           gpaSci: fd.get('gpaSci'),
           gpaMath: fd.get('gpaMath'),
           fromSchool: fd.get('fromSchool'),
-          prevSchool: fd.get('prevSchool')
+          prevSchool: fd.get('prevSchool') || '',
+          prevSubdistrict: fd.get('prevSubdistrict') || '',
+          prevDistrict: fd.get('prevDistrict') || '',
+          prevProvince: fd.get('prevProvince') || ''
         },
         program: fd.get('program'),
         files: {
