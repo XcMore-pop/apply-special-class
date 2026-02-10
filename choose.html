@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>เลือกประเภทการสมัคร</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--line:#e2e8f0;--txt:#0f172a;--muted:#475569}
+    body{margin:0;font-family:Sarabun,system-ui;background:#fff;color:var(--txt)}
+    .wrap{max-width:1100px;margin:0 auto;padding:28px}
+    .head{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}
+    .logo{width:84px;height:84px;border-radius:999px;border:1px solid var(--line);background:#fff;display:grid;place-items:center;font-size:40px}
+    .sub{color:var(--muted);line-height:1.7}
+    .announce{color:#f97316;font-weight:700}
+    .grid{margin-top:22px;display:grid;grid-template-columns:1fr;gap:18px;justify-items:center}
+    @media(min-width:860px){.grid{grid-template-columns:1fr 1fr}}
+    .tile{
+      width:min(420px,100%);
+      text-decoration:none;color:inherit;
+      border:1px solid var(--line);
+      border-radius:26px;
+      padding:22px;
+      background:#fff;
+      box-shadow:0 16px 40px rgba(2,6,23,.08);
+      display:flex;flex-direction:column;align-items:center;gap:12px;
+      transition:transform .15s ease, box-shadow .15s ease;
+    }
+    .tile:hover{transform:translateY(-3px);box-shadow:0 22px 60px rgba(2,6,23,.12)}
+    .badge{
+      width:210px;height:210px;border-radius:22px;
+      display:grid;place-items:center;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.05);
+      position:relative;
+    }
+    .cap{
+      position:absolute;top:28px;left:50%;transform:translateX(-50%);
+      width:120px;height:70px;border-radius:14px 14px 24px 24px;
+      clip-path: polygon(0 40%, 50% 0, 100% 40%, 50% 70%);
+      opacity:.85;
+    }
+    .lv{font-size:70px;font-weight:900;letter-spacing:.5px}
+    .label{font-weight:800}
+    .back{margin-top:18px;display:inline-flex;gap:10px;align-items:center;text-decoration:none;color:var(--txt);border:1px solid var(--line);padding:10px 12px;border-radius:14px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="head">
+      <div class="logo">🏫</div>
+      <div style="font-weight:900;font-size:18px">ระบบรับสมัครนักเรียนออนไลน์</div>
+      <div class="sub">โรงเรียนเตรียมอุดมศึกษาพัฒนาการ อุบลราชธานี</div>
+      <div class="announce">เลือกประเภทการสมัครก่อน แล้วระบบจะพาไปฟอร์ม</div>
+    </div>
+
+    <div class="grid">
+      <a class="tile" href="apply-m1.html">
+        <div class="badge" style="background:#d9f99d">
+          <div class="cap" style="background:#f97316"></div>
+          <div class="lv" style="color:#f97316">ม.1</div>
+        </div>
+        <div class="label">สมัครเข้า ม.1</div>
+        <div class="sub">สำหรับผู้สมัครระดับมัธยมศึกษาปีที่ 1</div>
+      </a>
+
+      <a class="tile" href="apply-m4.html">
+        <div class="badge" style="background:#cffafe">
+          <div class="cap" style="background:#16a34a"></div>
+          <div class="lv" style="color:#16a34a">ม.4</div>
+        </div>
+        <div class="label">สมัครเข้า ม.4</div>
+        <div class="sub">สำหรับผู้สมัครระดับมัธยมศึกษาปีที่ 4</div>
+      </a>
+    </div>
+
+    <div style="display:flex;justify-content:center">
+      <a class="back" href="index.html">← กลับหน้าแรก</a>
+    </div>
+  </div>
+</body>
+</html>
