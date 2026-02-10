@@ -558,8 +558,8 @@
             </div>
 
             <div class="col12">
-              <label>หมายเหตุเพิ่มเติม <span class="req">*</span></label>
-              <textarea name="note" required placeholder="ถ้าไม่มีให้ใส่ “-”"></textarea>
+              <label>หมายเหตุเพิ่มเติม <span class="req"></span></label>
+              <textarea name="note" required placeholder=""></textarea>
             </div>
           </div>
 
@@ -668,7 +668,7 @@
 
       if(!f.checkValidity()){
         f.reportValidity();
-        showError('กรอกข้อมูลให้ครบทุกช่อง (ยกเว้นความสามารถพิเศษ)');
+        showError('');
         return;
       }
 
