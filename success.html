@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ส่งสำเร็จ</title>
+  <style>
+    :root{--line:#223252;--txt:#e6eefc;--muted:#a9b7d3;--brand:#22c55e;}
+    body{margin:0;font-family:system-ui,-apple-system,"Sarabun",sans-serif;background:linear-gradient(180deg,#071022,#0b1220);color:var(--txt)}
+    .wrap{max-width:900px;margin:0 auto;padding:22px}
+    .card{border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.03);padding:18px}
+    .id{font-size:26px;font-weight:700;letter-spacing:.5px;margin:10px 0}
+    a,button{display:inline-flex;gap:10px;align-items:center;margin-top:12px;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.02);color:var(--txt);text-decoration:none;cursor:pointer}
+    .primary{border-color:rgba(34,197,94,.55);background:rgba(34,197,94,.14)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div style="font-size:18px">✅ ส่งใบสมัครสำเร็จ</div>
+      <div style="color:var(--muted);margin-top:6px">เลขใบสมัครของคุณคือ</div>
+      <div id="appId" class="id">-</div>
+      <div style="color:var(--muted)">เก็บเลขนี้ไว้ใช้เช็คสถานะ</div>
+
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="primary" href="status.html">🔎 เช็คสถานะ</a>
+        <a href="index.html">🏠 กลับหน้าแรก</a>
+        <button onclick="copyId()">📋 คัดลอกเลข</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const id = localStorage.getItem('latestApplicationId') || '-';
+    document.getElementById('appId').textContent = id;
+    function copyId(){
+      navigator.clipboard.writeText(id);
+      alert('คัดลอกแล้ว');
+    }
+  </script>
+</body>
+</html>
