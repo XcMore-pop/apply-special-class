@@ -11,7 +11,8 @@ const firebaseConfig = {
   storageBucket: "school-admission-xcmore.firebasestorage.app",
   messagingSenderId: "892874462868",
   appId: "1:892874462868:web:5e21fd2a30ce9a8d1d4681",
-};
+  measurementId: "G-804D6MGZY6"
+};;
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
