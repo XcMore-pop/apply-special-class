@@ -4,41 +4,67 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>สมัครเรียน | ห้องเรียนพิเศษ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#0b1220;--card:#121b2e;--line:#223252;--txt:#e6eefc;--muted:#a9b7d3;--brand:#22c55e;}
-    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,"Sarabun",sans-serif;background:linear-gradient(180deg,#071022,#0b1220);color:var(--txt)}
-    .wrap{max-width:980px;margin:0 auto;padding:22px}
-    .card{border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.03);padding:16px}
-    .row{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
-    .col6{grid-column:span 12} @media(min-width:860px){.col6{grid-column:span 6}}
+    :root{--bg:#f6fbf7;--card:#fff;--txt:#0f172a;--muted:#475569;--line:#e2e8f0;--brand:#16a34a;--brand2:#22c55e;--shadow:0 18px 40px rgba(2,6,23,.08);}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"Sarabun",system-ui,-apple-system,sans-serif;background:
+      radial-gradient(900px 450px at 20% 0%, rgba(34,197,94,.18), transparent 55%), var(--bg);color:var(--txt)}
+    .wrap{max-width:1050px;margin:0 auto;padding:22px}
+    a.back{display:inline-flex;gap:10px;align-items:center;text-decoration:none;color:var(--txt);padding:10px 12px;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:0 10px 22px rgba(2,6,23,.06)}
+    .card{margin-top:14px;border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.92);box-shadow:var(--shadow);padding:16px}
+    .top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start}
+    .title{margin:0;font-size:22px}
+    .hint{color:var(--muted);font-size:13px;line-height:1.6}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-top:10px}
+    .col6{grid-column:span 12}
+    @media(min-width:900px){.col6{grid-column:span 6}}
     label{display:block;color:var(--muted);font-size:13px;margin:10px 0 6px}
-    input,select,textarea{width:100%;padding:12px 12px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.15);color:var(--txt);outline:none}
+    input,select,textarea{width:100%;padding:12px 12px;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--txt);outline:none}
     textarea{min-height:90px;resize:vertical}
-    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-    button,a.btn{padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.02);color:var(--txt);cursor:pointer;text-decoration:none}
-    button.primary{border-color:rgba(34,197,94,.55);background:rgba(34,197,94,.14)}
-    .hint{color:var(--muted);font-size:13px;margin-top:8px}
+    .filebox{border:1px dashed #cbd5e1;border-radius:16px;padding:12px;background:rgba(248,250,252,.7)}
+    .filename{margin-top:8px;font-size:13px;color:var(--muted)}
+    .req{color:#ef4444;font-weight:700}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    button,a.btn{display:inline-flex;gap:10px;align-items:center;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--txt);cursor:pointer;text-decoration:none;box-shadow:0 10px 22px rgba(2,6,23,.06)}
+    button.primary{border-color:transparent;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;box-shadow:0 16px 30px rgba(22,163,74,.22)}
+    .bar{height:10px;border-radius:999px;background:#e2e8f0;overflow:hidden;margin-top:10px}
+    .bar > div{height:100%;width:35%;background:linear-gradient(90deg,var(--brand),var(--brand2))}
+    .note{margin-top:10px;color:var(--muted);font-size:13px}
+    .toast{margin-top:10px;padding:10px 12px;border:1px solid #fecaca;background:#fff1f2;color:#991b1b;border-radius:14px;display:none}
   </style>
 </head>
 <body>
   <div class="wrap">
-    <a class="btn" href="index.html">← กลับหน้าแรก</a>
-    <h2 style="margin:14px 0 10px">ใบสมัครออนไลน์</h2>
+    <a class="back" href="index.html">← กลับหน้าแรก</a>
 
     <div class="card">
+      <div class="top">
+        <div>
+          <h2 class="title">ใบสมัครออนไลน์</h2>
+          <div class="hint">กรอกให้ครบ <span class="req">*</span> แล้วกดส่ง ระบบจะสร้างเลขใบสมัครให้ทันที</div>
+          <div class="bar"><div></div></div>
+        </div>
+        <div class="hint">รองรับไฟล์: PDF/JPG/PNG</div>
+      </div>
+
+      <div id="toast" class="toast"></div>
+
       <form id="f">
-        <div class="row">
+        <div class="grid">
           <div class="col6">
-            <label>ชื่อ-สกุลนักเรียน</label>
+            <label>ชื่อ-สกุลนักเรียน <span class="req">*</span></label>
             <input required name="studentName" placeholder="เช่น ธนโยธิน ใจดี" />
           </div>
           <div class="col6">
-            <label>เลขบัตรประชาชน/เลขนักเรียน</label>
+            <label>เลขบัตร/เลขนักเรียน <span class="req">*</span></label>
             <input required name="studentId" inputmode="numeric" placeholder="ตัวเลข" />
           </div>
 
           <div class="col6">
-            <label>ระดับชั้นที่สมัคร</label>
+            <label>ระดับชั้นที่สมัคร <span class="req">*</span></label>
             <select required name="grade">
               <option value="">-- เลือก --</option>
               <option>ม.1 ห้องพิเศษ</option>
@@ -46,7 +72,7 @@
             </select>
           </div>
           <div class="col6">
-            <label>โปรแกรม</label>
+            <label>โปรแกรม <span class="req">*</span></label>
             <select required name="program">
               <option value="">-- เลือก --</option>
               <option>SMTE</option>
@@ -56,7 +82,7 @@
           </div>
 
           <div class="col6">
-            <label>เบอร์โทร</label>
+            <label>เบอร์โทร <span class="req">*</span></label>
             <input required name="phone" inputmode="tel" placeholder="0xxxxxxxxx" />
           </div>
           <div class="col6">
@@ -65,21 +91,28 @@
           </div>
 
           <div class="col6">
-            <label>ชื่อผู้ปกครอง</label>
+            <label>ชื่อผู้ปกครอง <span class="req">*</span></label>
             <input required name="parentName" placeholder="ชื่อ-สกุลผู้ปกครอง" />
           </div>
           <div class="col6">
-            <label>เบอร์ผู้ปกครอง</label>
+            <label>เบอร์ผู้ปกครอง <span class="req">*</span></label>
             <input required name="parentPhone" inputmode="tel" placeholder="0xxxxxxxxx" />
           </div>
 
           <div class="col6">
-            <label>อัปโหลด ปพ.1 / ใบรับรองผลการเรียน</label>
-            <input required name="doc1" type="file" accept=".pdf,.jpg,.jpeg,.png" />
+            <label>ปพ.1/ใบรับรองผลการเรียน <span class="req">*</span></label>
+            <div class="filebox">
+              <input required id="doc1" name="doc1" type="file" accept=".pdf,.jpg,.jpeg,.png" />
+              <div id="doc1name" class="filename">ยังไม่ได้เลือกไฟล์</div>
+            </div>
           </div>
+
           <div class="col6">
-            <label>อัปโหลด รูปถ่ายนักเรียน</label>
-            <input required name="photo" type="file" accept=".jpg,.jpeg,.png" />
+            <label>รูปถ่ายนักเรียน <span class="req">*</span></label>
+            <div class="filebox">
+              <input required id="photo" name="photo" type="file" accept=".jpg,.jpeg,.png" />
+              <div id="photoname" class="filename">ยังไม่ได้เลือกไฟล์</div>
+            </div>
           </div>
 
           <div class="col6" style="grid-column:span 12">
@@ -88,17 +121,28 @@
           </div>
         </div>
 
-        <div class="btns">
+        <div class="actions">
           <button class="primary" type="submit">✅ ส่งใบสมัคร</button>
-          <a class="btn" href="status.html">ไปเช็คสถานะ</a>
+          <a class="btn" href="status.html">🔎 ไปเช็คสถานะ</a>
         </div>
-        <div class="hint">* เดโมนี้จะสร้างเลขใบสมัครและเก็บไว้ในเครื่อง (localStorage) ยังไม่ได้ส่งเข้าฐานข้อมูลจริง</div>
+        <div class="note">เดโมนี้จะเก็บข้อมูลใบสมัครล่าสุดไว้ในเครื่อง (localStorage) ยังไม่ส่งเข้าเซิร์ฟเวอร์จริง</div>
       </form>
     </div>
   </div>
 
   <script>
     const f = document.getElementById('f');
+    const toast = document.getElementById('toast');
+
+    function setFileName(inputId, labelId){
+      const el = document.getElementById(inputId);
+      const lab = document.getElementById(labelId);
+      el.addEventListener('change', ()=>{
+        lab.textContent = el.files && el.files[0] ? el.files[0].name : 'ยังไม่ได้เลือกไฟล์';
+      });
+    }
+    setFileName('doc1','doc1name');
+    setFileName('photo','photoname');
 
     function makeAppId(){
       const t = new Date();
@@ -109,9 +153,24 @@
       return `APP-${y}${m}${d}-${r}`;
     }
 
+    function showError(msg){
+      toast.style.display = 'block';
+      toast.textContent = msg;
+      toast.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
     f.addEventListener('submit', (e)=>{
       e.preventDefault();
+      toast.style.display = 'none';
+
       const fd = new FormData(f);
+
+      const phone = (fd.get('phone') || '').toString().trim();
+      const parentPhone = (fd.get('parentPhone') || '').toString().trim();
+      if(phone.length < 9 || parentPhone.length < 9){
+        showError('เบอร์โทรดูเหมือนสั้นเกินไป ลองเช็คอีกที');
+        return;
+      }
 
       const appId = makeAppId();
       const payload = {
@@ -120,10 +179,10 @@
         studentId: fd.get('studentId'),
         grade: fd.get('grade'),
         program: fd.get('program'),
-        phone: fd.get('phone'),
+        phone,
         email: fd.get('email') || '',
         parentName: fd.get('parentName'),
-        parentPhone: fd.get('parentPhone'),
+        parentPhone,
         note: fd.get('note') || '',
         status: 'รอตรวจเอกสาร',
         createdAt: new Date().toISOString()
@@ -131,7 +190,6 @@
 
       localStorage.setItem('latestApplication', JSON.stringify(payload));
       localStorage.setItem('latestApplicationId', appId);
-
       window.location.href = `success.html`;
     });
   </script>
