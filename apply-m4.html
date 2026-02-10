@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#f6fbf7; --card:#fff; --txt:#0f172a; --muted:#475569;
+      --bg:#f6fbf7; --txt:#0f172a; --muted:#475569;
       --line:#e2e8f0; --brand:#16a34a; --brand2:#22c55e;
       --shadow:0 18px 40px rgba(2,6,23,.08);
       --warnbg:#fff1f2; --warnbd:#fecaca; --warn:#991b1b;
@@ -28,7 +28,10 @@
       backdrop-filter: blur(10px);
       border-bottom:1px solid var(--line);
     }
-    .topbar .inner{max-width:1100px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .topbar .inner{
+      max-width:1100px;margin:0 auto;padding:12px 18px;
+      display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap
+    }
     .brand{display:flex;align-items:center;gap:10px}
     .logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--brand),var(--brand2));box-shadow:0 12px 24px rgba(22,163,74,.25)}
     .brand .t1{font-weight:800}
@@ -41,6 +44,7 @@
       box-shadow:0 10px 22px rgba(2,6,23,.06);
       white-space:nowrap;
     }
+
     .header{
       margin-top:12px;
       border:1px solid var(--line);
@@ -50,41 +54,33 @@
       padding:16px;
       overflow:hidden;
       position:relative;
+      text-align:center;
     }
     .header:after{
       content:""; position:absolute; right:-160px; top:-160px;
       width:420px;height:420px;border-radius:999px;
       background:radial-gradient(circle at 30% 30%, rgba(34,197,94,.22), transparent 60%);
     }
-    h1{margin:0;font-size:20px}
-    .sub{margin-top:6px;color:var(--muted);line-height:1.6}
-    .pillrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-    .pill{padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.7);color:var(--muted);font-size:13px}
-    .layout{
-      display:grid;grid-template-columns: 1fr;gap:14px;margin-top:14px;
+    .crest{
+      width:68px;height:68px;border-radius:999px;
+      border:1px solid var(--line); background:#fff;
+      display:grid;place-items:center;
+      margin:0 auto 8px;
+      font-size:34px;
+      position:relative; z-index:1;
     }
-    @media(min-width:980px){
-      .layout{grid-template-columns: 320px 1fr;align-items:start}
+    .hbig{margin:0;font-size:18px;font-weight:800;position:relative;z-index:1}
+    .hschool{margin-top:6px;font-weight:800;color:#f97316;position:relative;z-index:1}
+    .hmid{margin-top:2px;color:var(--muted);position:relative;z-index:1}
+    .toast{
+      border:1px solid var(--warnbd); background:var(--warnbg); color:var(--warn);
+      padding:10px 12px;border-radius:16px;display:none;margin-top:12px;
+      text-align:left;
+      position:relative; z-index:1;
     }
-    .side{
-      border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.9);
-      box-shadow:0 12px 26px rgba(2,6,23,.06);
-      padding:14px;
-      position:sticky; top:86px;
-      height:fit-content;
-    }
-    .side h3{margin:0 0 10px;font-size:16px}
-    .toc{display:flex;flex-direction:column;gap:8px}
-    .toc a{
-      text-decoration:none;color:var(--txt);
-      border:1px solid var(--line);border-radius:14px;
-      padding:10px 10px;background:#fff;
-      display:flex;justify-content:space-between;align-items:center;gap:10px;
-    }
-    .toc small{color:var(--muted)}
-    .main{display:flex;flex-direction:column;gap:14px}
 
     .card{
+      margin-top:14px;
       border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.92);
       box-shadow:var(--shadow);padding:14px;
     }
@@ -99,8 +95,8 @@
       border:1px solid rgba(22,163,74,.18);
       display:grid;place-items:center;color:var(--brand);font-weight:800;
     }
-    .req{color:#ef4444;font-weight:800}
     .hint{color:var(--muted);font-size:13px}
+    .req{color:#ef4444;font-weight:800}
 
     .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
     .col3{grid-column:span 12}
@@ -124,7 +120,6 @@
       background:#fff;color:var(--txt);
       outline:none;
     }
-    textarea{min-height:92px;resize:vertical}
     .rowinline{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
     .radio{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
     .radio label{
@@ -134,28 +129,26 @@
       box-shadow:0 10px 20px rgba(2,6,23,.05);
     }
     .radio input{width:auto}
-    .filebox{
-      border:1px dashed #cbd5e1;border-radius:18px;padding:12px;background:rgba(248,250,252,.7)
-    }
-    .filename{margin-top:8px;font-size:13px;color:var(--muted)}
-    .toast{
-      border:1px solid var(--warnbd); background:var(--warnbg); color:var(--warn);
-      padding:10px 12px;border-radius:16px;display:none;margin-top:10px;
-    }
-    .actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-top:12px}
-    button,a.btn{
+
+    .filebox{border:1px solid var(--line);border-radius:14px;background:#fff;display:flex;align-items:center;gap:10px;padding:10px}
+    .filebox input[type="file"]{border:none;padding:0}
+    .filename{font-size:13px;color:var(--muted);margin-top:6px}
+
+    hr.sep{border:none;border-top:1px solid var(--line);margin:12px 0}
+
+    .actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+    a.btn{
       display:inline-flex;gap:10px;align-items:center;
       padding:12px 14px;border-radius:14px;border:1px solid var(--line);
       background:#fff;color:var(--txt);cursor:pointer;text-decoration:none;
       box-shadow:0 10px 22px rgba(2,6,23,.06)
     }
-    button.primary{
-      border-color:transparent;
-      background:linear-gradient(135deg,var(--brand),var(--brand2));
-      color:#fff;
+    button{
+      padding:12px 18px;border-radius:8px;border:0;
+      background:#16a34a;color:#fff;font-weight:800;cursor:pointer;
       box-shadow:0 16px 30px rgba(22,163,74,.22)
     }
-    .mini{font-size:12px;color:var(--muted)}
+    .mini{font-size:12px;color:var(--muted);margin-top:10px}
   </style>
 </head>
 <body>
@@ -165,411 +158,288 @@
         <div class="logo"></div>
         <div>
           <div class="t1">ใบสมัครเข้าเรียนต่อ ระดับชั้น ม.4</div>
-          <div class="t2">ระบบรับสมัครออนไลน์ • แนบเอกสาร • ตรวจสอบว่าใส่ครบก่อนบันทึก</div>
+          <div class="t2">บังคับกรอกทุกช่อง ยกเว้น “ความสามารถพิเศษ” • “โรงเรียนเดิม” จะขึ้นเมื่อเลือก “จากโรงเรียนอื่น”</div>
         </div>
       </div>
-      <a class="back" href="index.html">← กลับหน้าแรก</a>
+      <a class="back" href="choose.html">← กลับหน้าเลือกสมัคร</a>
     </div>
   </div>
 
   <div class="wrap">
     <div class="header">
-      <h1>โรงเรียน / โครงการห้องเรียนพิเศษ</h1>
-      <div class="sub">กรอกข้อมูลให้ตรงตามเอกสารจริง (บังคับกรอกทุกช่อง ยกเว้น “ความสามารถพิเศษ”) และ “โรงเรียนเดิม” จะขึ้นเมื่อเลือก “จากโรงเรียนอื่น”</div>
-      <div class="pillrow">
-        <div class="pill">รองรับมือถือ/คอม</div>
-        <div class="pill">แนบไฟล์ PDF/JPG/PNG</div>
-        <div class="pill">ซ่อน/โชว์ตามเงื่อนไข</div>
-      </div>
+      <div class="crest">🏫</div>
+      <div class="hbig">ใบสมัครเข้าเรียนต่อ &nbsp; <b>ชั้นมัธยมศึกษาปีที่ 4</b></div>
+      <div class="hschool">โรงเรียนเตรียมอุดมศึกษาพัฒนาการ อุบลราชธานี</div>
+      <div class="hmid">กรอกข้อมูลให้ตรงตามเอกสารจริง</div>
       <div id="toast" class="toast"></div>
     </div>
 
-    <form id="f" class="layout" novalidate>
-      <aside class="side">
-        <h3>เมนูแบบฟอร์ม</h3>
-        <div class="toc">
-          <a href="#sec-student"><span>ข้อมูลนักเรียน</span><small>1</small></a>
-          <a href="#sec-address"><span>ที่อยู่ตามทะเบียนบ้าน</span><small>2</small></a>
-          <a href="#sec-parent"><span>ข้อมูลบิดา-มารดา</span><small>3</small></a>
-          <a href="#sec-edu"><span>การศึกษา</span><small>4</small></a>
-          <a href="#sec-program"><span>หลักสูตรที่ต้องการสมัคร</span><small>5</small></a>
-          <a href="#sec-files"><span>แนบไฟล์หลักฐาน</span><small>6</small></a>
+    <form id="f" class="card" novalidate>
+      <!-- ข้อมูลนักเรียน -->
+      <div class="cardhead">
+        <div class="title">
+          <div class="icon">👤</div>
+          <div>
+            <b>ข้อมูลนักเรียน</b>
+            <div class="hint">กรอกตามบัตรประชาชน/สูติบัตร</div>
+          </div>
         </div>
-        <div class="mini" style="margin-top:10px">* ช่องที่มี <span class="req">*</span> คือบังคับกรอก</div>
-      </aside>
+        <div class="hint"><span class="req">*</span> จำเป็น</div>
+      </div>
 
-      <main class="main">
-        <section id="sec-student" class="card">
-          <div class="cardhead">
-            <div class="title">
-              <div class="icon">👤</div>
-              <div>
-                <b>ข้อมูลนักเรียน</b>
-                <div class="hint">กรอกตามบัตรประชาชน/สูติบัตร</div>
-              </div>
-            </div>
-            <div class="hint"><span class="req">*</span> จำเป็น</div>
+      <div class="grid">
+        <div class="col4">
+          <label>คำนำหน้า <span class="req">*</span></label>
+          <select name="prefix" required>
+            <option value="">เลือกคำนำหน้า</option>
+            <option>เด็กชาย</option><option>เด็กหญิง</option>
+            <option>นาย</option><option>นางสาว</option>
+          </select>
+        </div>
+        <div class="col4">
+          <label>ชื่อ <span class="req">*</span></label>
+          <input name="firstName" required placeholder="ชื่อจริง" />
+        </div>
+        <div class="col4">
+          <label>สกุล <span class="req">*</span></label>
+          <input name="lastName" required placeholder="นามสกุล" />
+        </div>
+
+        <div class="col6">
+          <label>รหัสบัตรประชาชน <span class="req">*</span></label>
+          <input name="citizenId" required inputmode="numeric" placeholder="x-xxxx-xxxxx-xx-x" />
+        </div>
+        <div class="col3">
+          <label>เชื้อชาติ <span class="req">*</span></label>
+          <input name="race" required placeholder="เช่น ไทย" />
+        </div>
+        <div class="col3">
+          <label>สัญชาติ <span class="req">*</span></label>
+          <input name="nationality" required placeholder="เช่น ไทย" />
+        </div>
+
+        <div class="col4">
+          <label>วันเกิด <span class="req">*</span></label>
+          <input name="birthDay" required inputmode="numeric" placeholder="เช่น 7" />
+        </div>
+        <div class="col4">
+          <label>เดือนเกิด <span class="req">*</span></label>
+          <select name="birthMonth" required>
+            <option value="">เดือน</option>
+            <option>มกราคม</option><option>กุมภาพันธ์</option><option>มีนาคม</option><option>เมษายน</option>
+            <option>พฤษภาคม</option><option>มิถุนายน</option><option>กรกฎาคม</option><option>สิงหาคม</option>
+            <option>กันยายน</option><option>ตุลาคม</option><option>พฤศจิกายน</option><option>ธันวาคม</option>
+          </select>
+        </div>
+        <div class="col4">
+          <label>ปีเกิด (พ.ศ.) <span class="req">*</span></label>
+          <input name="birthYear" required inputmode="numeric" placeholder="เช่น 2552" />
+        </div>
+
+        <div class="col4">
+          <label>ศาสนา <span class="req">*</span></label>
+          <input name="religion" required placeholder="เช่น พุทธ" />
+        </div>
+        <div class="col8">
+          <label>ความสามารถพิเศษ (ไม่บังคับ)</label>
+          <input name="talent" placeholder="เช่น กีฬา/ดนตรี/หุ่นยนต์ ฯลฯ" />
+        </div>
+      </div>
+
+      <!-- ที่อยู่ -->
+      <hr class="sep" />
+      <div class="cardhead" style="border-bottom:none;margin-bottom:0;padding-bottom:0">
+        <div class="title">
+          <div class="icon">🏠</div>
+          <div><b>ที่อยู่ตามทะเบียนบ้าน</b></div>
+        </div>
+      </div>
+
+      <div class="grid" style="margin-top:8px">
+        <div class="col4"><label>บ้านเลขที่ <span class="req">*</span></label><input name="addrNo" required placeholder="เช่น 99/1" /></div>
+        <div class="col4"><label>หมู่ที่ <span class="req">*</span></label><input name="addrMoo" required placeholder="เช่น 12" /></div>
+        <div class="col4"><label>หมู่บ้าน <span class="req">*</span></label><input name="addrVillage" required placeholder="ชื่อหมู่บ้าน" /></div>
+
+        <div class="col6"><label>แขวง/ตำบล <span class="req">*</span></label><input name="addrSubdistrict" required placeholder="ตำบล" /></div>
+        <div class="col6"><label>เขต/อำเภอ <span class="req">*</span></label><input name="addrDistrict" required placeholder="อำเภอ" /></div>
+
+        <div class="col6"><label>จังหวัด <span class="req">*</span></label><input name="addrProvince" required placeholder="จังหวัด" /></div>
+        <div class="col6"><label>รหัสไปรษณีย์ <span class="req">*</span></label><input name="addrZip" required inputmode="numeric" placeholder="xxxxx" /></div>
+
+        <div class="col6"><label>โทรศัพท์บ้าน <span class="req">*</span></label><input name="homePhone" required inputmode="tel" placeholder="ตัวอย่าง 045xxxxxx" /></div>
+        <div class="col6"><label>โทรศัพท์มือถือ <span class="req">*</span></label><input name="mobilePhone" required inputmode="tel" placeholder="0xxxxxxxxx" /></div>
+
+        <div class="col12">
+          <div class="rowinline" style="margin-top:8px">
+            <label style="margin:0">
+              <input id="sameAddr" type="checkbox" />
+              ที่อยู่ปัจจุบันใช้ที่อยู่ตามทะเบียนบ้าน
+            </label>
           </div>
+          <div class="hint" style="margin-top:6px">ถ้าติ๊ก ระบบจะคัดลอกข้อมูลไป “ที่อยู่ปัจจุบัน” อัตโนมัติ</div>
+        </div>
+      </div>
 
+      <div style="margin-top:12px">
+        <b>ที่อยู่ปัจจุบัน</b>
+        <div class="grid" style="margin-top:6px">
+          <div class="col4"><label>บ้านเลขที่ <span class="req">*</span></label><input name="curNo" required /></div>
+          <div class="col4"><label>หมู่ที่ <span class="req">*</span></label><input name="curMoo" required /></div>
+          <div class="col4"><label>หมู่บ้าน <span class="req">*</span></label><input name="curVillage" required /></div>
+          <div class="col6"><label>แขวง/ตำบล <span class="req">*</span></label><input name="curSubdistrict" required /></div>
+          <div class="col6"><label>เขต/อำเภอ <span class="req">*</span></label><input name="curDistrict" required /></div>
+          <div class="col6"><label>จังหวัด <span class="req">*</span></label><input name="curProvince" required /></div>
+          <div class="col6"><label>รหัสไปรษณีย์ <span class="req">*</span></label><input name="curZip" required inputmode="numeric" /></div>
+        </div>
+      </div>
+
+      <!-- บิดามารดา -->
+      <hr class="sep" />
+      <div class="cardhead" style="border-bottom:none;margin-bottom:0;padding-bottom:0">
+        <div class="title">
+          <div class="icon">👪</div>
+          <div><b>ข้อมูล บิดา-มารดา</b></div>
+        </div>
+      </div>
+
+      <div class="grid" style="margin-top:8px">
+        <div class="col6"><label>ชื่อ-สกุล บิดา <span class="req">*</span></label><input name="fatherName" required /></div>
+        <div class="col6"><label>เลขบัตรประชาชนบิดา <span class="req">*</span></label><input name="fatherCid" required inputmode="numeric" placeholder="x-xxxx-xxxxx-xx-x" /></div>
+        <div class="col4"><label>อาชีพบิดา <span class="req">*</span></label><input name="fatherJob" required /></div>
+        <div class="col4"><label>รายได้ต่อเดือน (บิดา) <span class="req">*</span></label><input name="fatherIncome" required inputmode="numeric" /></div>
+        <div class="col4">
+          <label>สถานภาพของบิดา <span class="req">*</span></label>
+          <div class="radio">
+            <label><input type="radio" name="fatherAlive" value="มีชีวิต" checked required> มีชีวิต</label>
+            <label><input type="radio" name="fatherAlive" value="ไม่มีชีวิต" required> ไม่มีชีวิต</label>
+          </div>
+        </div>
+
+        <div class="col6"><label>ชื่อ-สกุล มารดา <span class="req">*</span></label><input name="motherName" required /></div>
+        <div class="col6"><label>เลขบัตรประชาชนมารดา <span class="req">*</span></label><input name="motherCid" required inputmode="numeric" placeholder="x-xxxx-xxxxx-xx-x" /></div>
+        <div class="col4"><label>อาชีพมารดา <span class="req">*</span></label><input name="motherJob" required /></div>
+        <div class="col4"><label>รายได้ต่อเดือน (มารดา) <span class="req">*</span></label><input name="motherIncome" required inputmode="numeric" /></div>
+        <div class="col4">
+          <label>สถานภาพของมารดา <span class="req">*</span></label>
+          <div class="radio">
+            <label><input type="radio" name="motherAlive" value="มีชีวิต" checked required> มีชีวิต</label>
+            <label><input type="radio" name="motherAlive" value="ไม่มีชีวิต" required> ไม่มีชีวิต</label>
+          </div>
+        </div>
+
+        <div class="col6">
+          <label>สถานภาพบิดามารดา <span class="req">*</span></label>
+          <select name="parentStatus" required>
+            <option value="">-- เลือกสถานภาพ --</option>
+            <option>อยู่ด้วยกัน</option>
+            <option>แยกกันอยู่</option>
+            <option>หย่าร้าง</option>
+            <option>อื่น ๆ</option>
+          </select>
+        </div>
+
+        <div class="col6">
+          <label>ผู้ปกครอง คือ <span class="req">*</span></label>
+          <div class="radio">
+            <label><input type="radio" name="guardian" value="บิดา" required> บิดา</label>
+            <label><input type="radio" name="guardian" value="มารดา" required> มารดา</label>
+            <label><input type="radio" name="guardian" value="บุคคลอื่นๆ" required> บุคคลอื่น ๆ</label>
+          </div>
+        </div>
+
+        <div class="col12">
+          <label>เบอร์โทรผู้ปกครองที่สามารถติดต่อได้ <span class="req">*</span></label>
+          <input name="guardianPhone" required inputmode="tel" placeholder="0xxxxxxxxx (หลายเบอร์คั่นด้วย , ได้)" />
+        </div>
+      </div>
+
+      <!-- การศึกษา -->
+      <hr class="sep" />
+      <div class="cardhead" style="border-bottom:none;margin-bottom:0;padding-bottom:0">
+        <div class="title">
+          <div class="icon">🎓</div>
+          <div><b>การศึกษา</b></div>
+        </div>
+      </div>
+
+      <div class="grid" style="margin-top:8px">
+        <div class="col4"><label>เกรดเฉลี่ยรวม (GPA) <span class="req">*</span></label><input name="gpa" required inputmode="decimal" placeholder="เช่น 3.25" /></div>
+        <div class="col4"><label>เกรดวิทย์ <span class="req">*</span></label><input name="gpaSci" required inputmode="decimal" placeholder="เช่น 3.50" /></div>
+        <div class="col4"><label>เกรดคณิต <span class="req">*</span></label><input name="gpaMath" required inputmode="decimal" placeholder="เช่น 3.75" /></div>
+
+        <div class="col12">
+          <label>สำเร็จการศึกษาหรือกำลังศึกษาอยู่ชั้น ม.3 <span class="req">*</span></label>
+          <div class="radio">
+            <label><input type="radio" name="fromSchool" value="จากโรงเรียนเดิม" checked required> จากโรงเรียนเดิม</label>
+            <label><input type="radio" name="fromSchool" value="จากโรงเรียนอื่น" required> จากโรงเรียนอื่น</label>
+          </div>
+        </div>
+
+        <div id="otherSchoolBox" class="col12" style="display:none">
           <div class="grid">
-            <div class="col4">
-              <label>คำนำหน้า <span class="req">*</span></label>
-              <select name="prefix" required>
-                <option value="">เลือกคำนำหน้า</option>
-                <option>เด็กชาย</option><option>เด็กหญิง</option>
-                <option>นาย</option><option>นางสาว</option>
-              </select>
-            </div>
-            <div class="col4">
-              <label>ชื่อ <span class="req">*</span></label>
-              <input name="firstName" required placeholder="ชื่อจริง" />
-            </div>
-            <div class="col4">
-              <label>สกุล <span class="req">*</span></label>
-              <input name="lastName" required placeholder="นามสกุล" />
-            </div>
-
-            <div class="col6">
-              <label>รหัสบัตรประชาชน <span class="req">*</span></label>
-              <input name="citizenId" required inputmode="numeric" placeholder="x-xxxx-xxxxx-xx-x" />
-            </div>
-            <div class="col3">
-              <label>เชื้อชาติ <span class="req">*</span></label>
-              <input name="race" required placeholder="เช่น ไทย" />
-            </div>
-            <div class="col3">
-              <label>สัญชาติ <span class="req">*</span></label>
-              <input name="nationality" required placeholder="เช่น ไทย" />
-            </div>
-
-            <div class="col4">
-              <label>วันเกิด <span class="req">*</span></label>
-              <input name="birthDay" required inputmode="numeric" placeholder="เช่น 7" />
-            </div>
-            <div class="col4">
-              <label>เดือนเกิด <span class="req">*</span></label>
-              <select name="birthMonth" required>
-                <option value="">เดือน</option>
-                <option>มกราคม</option><option>กุมภาพันธ์</option><option>มีนาคม</option><option>เมษายน</option>
-                <option>พฤษภาคม</option><option>มิถุนายน</option><option>กรกฎาคม</option><option>สิงหาคม</option>
-                <option>กันยายน</option><option>ตุลาคม</option><option>พฤศจิกายน</option><option>ธันวาคม</option>
-              </select>
-            </div>
-            <div class="col4">
-              <label>ปีเกิด (พ.ศ.) <span class="req">*</span></label>
-              <input name="birthYear" required inputmode="numeric" placeholder="เช่น 2552" />
-            </div>
-
-            <div class="col4">
-              <label>ศาสนา <span class="req">*</span></label>
-              <input name="religion" required placeholder="เช่น พุทธ" />
-            </div>
-            <div class="col8">
-              <label>ความสามารถพิเศษ (ไม่บังคับ)</label>
-              <input name="talent" placeholder="เช่น กีฬา/ดนตรี/หุ่นยนต์ ฯลฯ" />
-            </div>
+            <div class="col6"><label>ชื่อโรงเรียนเดิม <span class="req">*</span></label><input id="prevSchool" name="prevSchool" /></div>
+            <div class="col3"><label>ตำบล <span class="req">*</span></label><input id="prevSubdistrict" name="prevSubdistrict" /></div>
+            <div class="col3"><label>อำเภอ <span class="req">*</span></label><input id="prevDistrict" name="prevDistrict" /></div>
+            <div class="col6"><label>จังหวัด <span class="req">*</span></label><input id="prevProvince" name="prevProvince" /></div>
           </div>
-        </section>
+        </div>
+      </div>
 
-        <section id="sec-address" class="card">
-          <div class="cardhead">
-            <div class="title">
-              <div class="icon">🏠</div>
-              <div>
-                <b>ที่อยู่ตามทะเบียนบ้าน</b>
-                <div class="hint">สำหรับติดต่อ/จัดส่งเอกสาร</div>
-              </div>
-            </div>
-          </div>
+      <!-- หลักสูตร -->
+      <hr class="sep" />
+      <div class="cardhead" style="border-bottom:none;margin-bottom:0;padding-bottom:0">
+        <div class="title">
+          <div class="icon">📚</div>
+          <div><b>หลักสูตรที่ต้องการสมัครเรียน</b></div>
+        </div>
+      </div>
 
-          <div class="grid">
-            <div class="col4">
-              <label>บ้านเลขที่ <span class="req">*</span></label>
-              <input name="addrNo" required placeholder="เช่น 99/1" />
-            </div>
-            <div class="col4">
-              <label>หมู่ที่ <span class="req">*</span></label>
-              <input name="addrMoo" required placeholder="เช่น 12" />
-            </div>
-            <div class="col4">
-              <label>หมู่บ้าน <span class="req">*</span></label>
-              <input name="addrVillage" required placeholder="ชื่อหมู่บ้าน" />
-            </div>
+      <div class="radio" style="margin-top:10px">
+        <label><input type="radio" name="program" value="SMTE" required> SMTE : วิทยาศาสตร์-คณิตศาสตร์ เทคโนโลยีและสิ่งแวดล้อม</label>
+        <label><input type="radio" name="program" value="SMC-AI" required> SMC-AI : วิทยาศาสตร์-คณิตศาสตร์ คอมพิวเตอร์และปัญญาประดิษฐ์</label>
+        <label><input type="radio" name="program" value="SME" required> SME : วิทยาศาสตร์-คณิตศาสตร์ ภาษาอังกฤษ</label>
+      </div>
 
-            <div class="col6">
-              <label>แขวง/ตำบล <span class="req">*</span></label>
-              <input name="addrSubdistrict" required placeholder="ตำบล" />
-            </div>
-            <div class="col6">
-              <label>เขต/อำเภอ <span class="req">*</span></label>
-              <input name="addrDistrict" required placeholder="อำเภอ" />
-            </div>
+      <!-- แนบไฟล์ -->
+      <hr class="sep" />
+      <div class="cardhead" style="border-bottom:none;margin-bottom:0;padding-bottom:0">
+        <div class="title">
+          <div class="icon">📎</div>
+          <div><b>แนบไฟล์หลักฐาน</b></div>
+        </div>
+      </div>
 
-            <div class="col6">
-              <label>จังหวัด <span class="req">*</span></label>
-              <input name="addrProvince" required placeholder="จังหวัด" />
-            </div>
-            <div class="col6">
-              <label>รหัสไปรษณีย์ <span class="req">*</span></label>
-              <input name="addrZip" required inputmode="numeric" placeholder="xxxxx" />
-            </div>
+      <div class="grid" style="margin-top:8px">
+        <div class="col12">
+          <label>สำเนาบัตรประชาชน นักเรียน <span class="req">*</span></label>
+          <div class="filebox"><input id="fileCitizen" name="fileCitizen" type="file" required accept=".pdf,.jpg,.jpeg,.png" /></div>
+          <div id="nameCitizen" class="filename">ยังไม่ได้เลือกไฟล์</div>
+        </div>
 
-            <div class="col6">
-              <label>โทรศัพท์บ้าน <span class="req">*</span></label>
-              <input name="homePhone" required inputmode="tel" placeholder="ตัวอย่าง 045xxxxxx" />
-            </div>
-            <div class="col6">
-              <label>โทรศัพท์มือถือ <span class="req">*</span></label>
-              <input name="mobilePhone" required inputmode="tel" placeholder="0xxxxxxxxx" />
-            </div>
+        <div class="col12">
+          <label>ใบรับรองผล ปพ.7 หรือ ปพ.1 <span class="req">*</span></label>
+          <div class="filebox"><input id="fileTranscript" name="fileTranscript" type="file" required accept=".pdf,.jpg,.jpeg,.png" /></div>
+          <div id="nameTranscript" class="filename">ยังไม่ได้เลือกไฟล์</div>
+        </div>
 
-            <div class="col12">
-              <div class="rowinline" style="margin-top:8px">
-                <label style="margin:0">
-                  <input id="sameAddr" type="checkbox" />
-                  ที่อยู่ปัจจุบันใช้ที่อยู่ตามทะเบียนบ้าน
-                </label>
-              </div>
-              <div class="hint" style="margin-top:6px">ถ้าติ๊ก ระบบจะคัดลอกข้อมูลไป “ที่อยู่ปัจจุบัน” อัตโนมัติ</div>
-            </div>
-          </div>
+        <div class="col12">
+          <label>สลิปการชำระค่าสมัคร (เช่น 200 บาท) <span class="req">*</span></label>
+          <div class="filebox"><input id="fileSlip" name="fileSlip" type="file" required accept=".pdf,.jpg,.jpeg,.png" /></div>
+          <div id="nameSlip" class="filename">ยังไม่ได้เลือกไฟล์</div>
+        </div>
 
-          <div style="margin-top:12px;border-top:1px solid var(--line);padding-top:12px">
-            <b>ที่อยู่ปัจจุบัน</b>
-            <div class="grid" style="margin-top:6px">
-              <div class="col4"><label>บ้านเลขที่ <span class="req">*</span></label><input name="curNo" required /></div>
-              <div class="col4"><label>หมู่ที่ <span class="req">*</span></label><input name="curMoo" required /></div>
-              <div class="col4"><label>หมู่บ้าน <span class="req">*</span></label><input name="curVillage" required /></div>
-              <div class="col6"><label>แขวง/ตำบล <span class="req">*</span></label><input name="curSubdistrict" required /></div>
-              <div class="col6"><label>เขต/อำเภอ <span class="req">*</span></label><input name="curDistrict" required /></div>
-              <div class="col6"><label>จังหวัด <span class="req">*</span></label><input name="curProvince" required /></div>
-              <div class="col6"><label>รหัสไปรษณีย์ <span class="req">*</span></label><input name="curZip" required inputmode="numeric" /></div>
-            </div>
-          </div>
-        </section>
+        <div class="col12">
+          <label>รูปถ่าย (ขนาด 2 นิ้ว) <span class="req">*</span></label>
+          <div class="filebox"><input id="filePhoto" name="filePhoto" type="file" required accept=".jpg,.jpeg,.png" /></div>
+          <div id="namePhoto" class="filename">ยังไม่ได้เลือกไฟล์</div>
+        </div>
+      </div>
 
-        <section id="sec-parent" class="card">
-          <div class="cardhead">
-            <div class="title">
-              <div class="icon">👪</div>
-              <div>
-                <b>ข้อมูล บิดา-มารดา</b>
-                <div class="hint">ใช้สำหรับติดต่อ/ตรวจสอบสิทธิ</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="grid">
-            <div class="col6">
-              <label>ชื่อ-สกุล บิดา <span class="req">*</span></label>
-              <input name="fatherName" required placeholder="ชื่อ-สกุล" />
-            </div>
-            <div class="col6">
-              <label>เลขบัตรประชาชนบิดา <span class="req">*</span></label>
-              <input name="fatherCid" required inputmode="numeric" placeholder="x-xxxx-xxxxx-xx-x" />
-            </div>
-            <div class="col4">
-              <label>อาชีพบิดา <span class="req">*</span></label>
-              <input name="fatherJob" required />
-            </div>
-            <div class="col4">
-              <label>รายได้ต่อเดือน (บิดา) <span class="req">*</span></label>
-              <input name="fatherIncome" required inputmode="numeric" placeholder="ตัวเลข" />
-            </div>
-            <div class="col4">
-              <label>สถานภาพของบิดา <span class="req">*</span></label>
-              <div class="radio">
-                <label><input type="radio" name="fatherAlive" value="มีชีวิต" checked required> มีชีวิต</label>
-                <label><input type="radio" name="fatherAlive" value="ไม่มีชีวิต" required> ไม่มีชีวิต</label>
-              </div>
-            </div>
-
-            <div class="col6" style="margin-top:4px">
-              <label>ชื่อ-สกุล มารดา <span class="req">*</span></label>
-              <input name="motherName" required placeholder="ชื่อ-สกุล" />
-            </div>
-            <div class="col6">
-              <label>เลขบัตรประชาชนมารดา <span class="req">*</span></label>
-              <input name="motherCid" required inputmode="numeric" placeholder="x-xxxx-xxxxx-xx-x" />
-            </div>
-            <div class="col4">
-              <label>อาชีพมารดา <span class="req">*</span></label>
-              <input name="motherJob" required />
-            </div>
-            <div class="col4">
-              <label>รายได้ต่อเดือน (มารดา) <span class="req">*</span></label>
-              <input name="motherIncome" required inputmode="numeric" placeholder="ตัวเลข" />
-            </div>
-            <div class="col4">
-              <label>สถานภาพของมารดา <span class="req">*</span></label>
-              <div class="radio">
-                <label><input type="radio" name="motherAlive" value="มีชีวิต" checked required> มีชีวิต</label>
-                <label><input type="radio" name="motherAlive" value="ไม่มีชีวิต" required> ไม่มีชีวิต</label>
-              </div>
-            </div>
-
-            <div class="col6">
-              <label>สถานภาพบิดามารดา <span class="req">*</span></label>
-              <select name="parentStatus" required>
-                <option value="">-- เลือกสถานภาพ --</option>
-                <option>อยู่ด้วยกัน</option>
-                <option>แยกกันอยู่</option>
-                <option>หย่าร้าง</option>
-                <option>อื่น ๆ</option>
-              </select>
-            </div>
-
-            <div class="col6">
-              <label>ผู้ปกครอง คือ <span class="req">*</span></label>
-              <div class="radio">
-                <label><input type="radio" name="guardian" value="บิดา" required> บิดา</label>
-                <label><input type="radio" name="guardian" value="มารดา" required> มารดา</label>
-                <label><input type="radio" name="guardian" value="บุคคลอื่นๆ" required> บุคคลอื่น ๆ</label>
-              </div>
-            </div>
-
-            <div class="col12">
-              <label>เบอร์โทรผู้ปกครองที่สามารถติดต่อได้ <span class="req">*</span></label>
-              <input name="guardianPhone" required inputmode="tel" placeholder="0xxxxxxxxx (หลายเบอร์คั่นด้วย , ได้)" />
-            </div>
-          </div>
-        </section>
-
-        <section id="sec-edu" class="card">
-          <div class="cardhead">
-            <div class="title">
-              <div class="icon">🎓</div>
-              <div>
-                <b>การศึกษา</b>
-                <div class="hint">ผลการเรียน/โรงเรียนเดิม</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="grid">
-            <div class="col4">
-              <label>เกรดเฉลี่ยรวม (GPA) <span class="req">*</span></label>
-              <input name="gpa" required inputmode="decimal" placeholder="เช่น 3.25" />
-            </div>
-            <div class="col4">
-              <label>เกรดวิทย์ <span class="req">*</span></label>
-              <input name="gpaSci" required inputmode="decimal" placeholder="เช่น 3.50" />
-            </div>
-            <div class="col4">
-              <label>เกรดคณิต <span class="req">*</span></label>
-              <input name="gpaMath" required inputmode="decimal" placeholder="เช่น 3.75" />
-            </div>
-
-            <div class="col12">
-              <label>สำเร็จการศึกษาหรือกำลังศึกษาอยู่ชั้น ม.3 <span class="req">*</span></label>
-              <div class="radio">
-                <label><input type="radio" name="fromSchool" value="จากโรงเรียนเดิม" checked required> จากโรงเรียนเดิม</label>
-                <label><input type="radio" name="fromSchool" value="จากโรงเรียนอื่น" required> จากโรงเรียนอื่น</label>
-              </div>
-            </div>
-
-            <div id="otherSchoolBox" class="col12" style="display:none">
-              <div class="grid">
-                <div class="col6">
-                  <label>ชื่อโรงเรียนเดิม <span class="req">*</span></label>
-                  <input id="prevSchool" name="prevSchool" placeholder="ชื่อโรงเรียนเดิม" />
-                </div>
-                <div class="col3">
-                  <label>ตำบล <span class="req">*</span></label>
-                  <input id="prevSubdistrict" name="prevSubdistrict" placeholder="ตำบล" />
-                </div>
-                <div class="col3">
-                  <label>อำเภอ <span class="req">*</span></label>
-                  <input id="prevDistrict" name="prevDistrict" placeholder="อำเภอ" />
-                </div>
-                <div class="col6">
-                  <label>จังหวัด <span class="req">*</span></label>
-                  <input id="prevProvince" name="prevProvince" placeholder="จังหวัด" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="sec-program" class="card">
-          <div class="cardhead">
-            <div class="title">
-              <div class="icon">📚</div>
-              <div>
-                <b>หลักสูตรที่ต้องการสมัครเรียน</b>
-                <div class="hint">เลือก 1 หลักสูตร</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="grid">
-            <div class="col12">
-              <div class="radio">
-                <label><input type="radio" name="program" value="SMTE" required> SMTE : วิทยาศาสตร์-คณิตศาสตร์ เทคโนโลยีและสิ่งแวดล้อม</label>
-                <label><input type="radio" name="program" value="SMC-AI" required> SMC-AI : วิทยาศาสตร์-คณิตศาสตร์ คอมพิวเตอร์และปัญญาประดิษฐ์</label>
-                <label><input type="radio" name="program" value="SME" required> SME : วิทยาศาสตร์-คณิตศาสตร์ ภาษาอังกฤษ</label>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="sec-files" class="card">
-          <div class="cardhead">
-            <div class="title">
-              <div class="icon">📎</div>
-              <div>
-                <b>แนบไฟล์หลักฐาน</b>
-                <div class="hint">ในระบบจริงไฟล์จะถูกอัปโหลดขึ้นเซิร์ฟเวอร์/คลาวด์</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="grid">
-            <div class="col12">
-              <label>สำเนาบัตรประชาชน นักเรียน <span class="req">*</span></label>
-              <div class="filebox">
-                <input id="fileCitizen" name="fileCitizen" type="file" required accept=".pdf,.jpg,.jpeg,.png" />
-                <div id="nameCitizen" class="filename">ยังไม่ได้เลือกไฟล์</div>
-              </div>
-            </div>
-
-            <div class="col12">
-              <label>ใบรับรองผล ปพ.7 หรือ ปพ.1 <span class="req">*</span></label>
-              <div class="filebox">
-                <input id="fileTranscript" name="fileTranscript" type="file" required accept=".pdf,.jpg,.jpeg,.png" />
-                <div id="nameTranscript" class="filename">ยังไม่ได้เลือกไฟล์</div>
-              </div>
-            </div>
-
-            <div class="col12">
-              <label>สลิปการชำระค่าสมัคร (เช่น 200 บาท) <span class="req">*</span></label>
-              <div class="filebox">
-                <input id="fileSlip" name="fileSlip" type="file" required accept=".pdf,.jpg,.jpeg,.png" />
-                <div id="nameSlip" class="filename">ยังไม่ได้เลือกไฟล์</div>
-              </div>
-            </div>
-
-            <div class="col12">
-              <label>รูปถ่าย (ขนาด 2 นิ้ว) <span class="req">*</span></label>
-              <div class="filebox">
-                <input id="filePhoto" name="filePhoto" type="file" required accept=".jpg,.jpeg,.png" />
-                <div id="namePhoto" class="filename">ยังไม่ได้เลือกไฟล์</div>
-              </div>
-            </div>
-
-            <div class="col12">
-              <label>หมายเหตุเพิ่มเติม <span class="req"></span></label>
-              <textarea name="note" required placeholder=""></textarea>
-            </div>
-          </div>
-
-          <div class="actions">
-            <a class="btn" href="status.html">🔎 ไปเช็คสถานะ</a>
-            <button class="primary" type="submit">💾 บันทึกข้อมูล</button>
-          </div>
-          <div class="mini" style="margin-top:8px">เดโมนี้ไม่อัปโหลดไฟล์จริง จะเก็บแค่ “ชื่อไฟล์” และข้อมูลฟอร์ม</div>
-        </section>
-      </main>
+      <div class="actions">
+        <a class="btn" href="status.html">🔎 ไปเช็คสถานะ</a>
+        <button type="submit">บันทึกข้อมูล</button>
+      </div>
+      <div class="mini">เดโมนี้ไม่อัปโหลดไฟล์จริง จะเก็บแค่ “ชื่อไฟล์” และข้อมูลฟอร์ม</div>
     </form>
   </div>
 
@@ -579,7 +449,7 @@
 
     function showError(msg){
       toast.style.display = 'block';
-      toast.textContent = msg;
+      toast.textContent = msg || 'กรอกข้อมูลให้ครบก่อนบันทึก';
       toast.scrollIntoView({behavior:'smooth', block:'start'});
     }
 
@@ -589,7 +459,7 @@
       const m = String(t.getMonth()+1).padStart(2,'0');
       const d = String(t.getDate()).padStart(2,'0');
       const r = Math.floor(Math.random()*9000)+1000;
-      return `APP-${y}${m}${d}-${r}`;
+      return `M4-${y}${m}${d}-${r}`;
     }
 
     function bindFileName(inputId, labelId){
@@ -604,6 +474,7 @@
     bindFileName('fileSlip','nameSlip');
     bindFileName('filePhoto','namePhoto');
 
+    // คัดลอกที่อยู่ทะเบียนบ้าน -> ที่อยู่ปัจจุบัน (ติดตามการพิมพ์)
     const sameAddr = document.getElementById('sameAddr');
     const addrMap = [
       ['addrNo','curNo'], ['addrMoo','curMoo'], ['addrVillage','curVillage'],
@@ -620,6 +491,7 @@
       f.elements[name].addEventListener('input', ()=>{ if(sameAddr.checked) copyAddr(); });
     });
 
+    // ซ่อน/โชว์โรงเรียนเดิมเมื่อเลือก "จากโรงเรียนอื่น"
     const otherSchoolBox = document.getElementById('otherSchoolBox');
     const prevSchool = document.getElementById('prevSchool');
     const prevSubdistrict = document.getElementById('prevSubdistrict');
@@ -637,7 +509,6 @@
         if(!isOther) el.value = '';
       });
     }
-
     f.querySelectorAll('input[name="fromSchool"]').forEach(r=>{
       r.addEventListener('change', setOtherSchoolUI);
     });
@@ -668,7 +539,7 @@
 
       if(!f.checkValidity()){
         f.reportValidity();
-        showError('');
+        showError('กรอกข้อมูลให้ครบทุกช่อง (ยกเว้นความสามารถพิเศษ)');
         return;
       }
 
@@ -682,6 +553,7 @@
       const appId = makeAppId();
 
       const payload = {
+        level: "ม.4",
         appId,
         student: {
           prefix: fd.get('prefix'),
@@ -754,13 +626,15 @@
           slip: (document.getElementById('fileSlip').files[0]||{}).name || '',
           photo: (document.getElementById('filePhoto').files[0]||{}).name || ''
         },
-        note: fd.get('note'),
         status: 'รอตรวจเอกสาร',
         createdAt: new Date().toISOString()
       };
 
+      localStorage.setItem('latestApplicationM4', JSON.stringify(payload));
+      localStorage.setItem('latestApplicationIdM4', appId);
       localStorage.setItem('latestApplication', JSON.stringify(payload));
       localStorage.setItem('latestApplicationId', appId);
+
       window.location.href = 'success.html';
     });
   </script>
